@@ -59,12 +59,12 @@ public class ObjectController : MonoBehaviour
         float x = pixelX / (Screen.height / Camera.main.orthographicSize);
         return x;
     }
-    public void Create(int index,string type)
+    public void Create(int index,ObjectType type)
     {
-        //switch (type) 
-        //{
-        //    case "flash":create        
-        //}
-        
+        switch (type)
+        {
+            case ObjectType.Fireworks:CreateFireworks(index);break;
+            case ObjectType.Light:CreateLight(index);break;
+        }
     }
 }

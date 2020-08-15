@@ -7,15 +7,19 @@ using System.Net;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
+using System;
 
 public class Net : MonoBehaviour
 {
+    public int timeRate = 2;
     // Start is called before the first frame update
     Udp udpClient;
     string ip;
     int point;
-    string serverUrl;
+    string serverUrlBase = "http://localhost:5000/API/";
     HttpClient client=new HttpClient();
+
+    float count=0;
     void Start()
     {
         //if (udpClient == null)
@@ -33,6 +37,15 @@ public class Net : MonoBehaviour
         //    SendEcho();
         //    Debug.Log(Time.time);
         //}
+        if (count <= 0)
+        {
+            count = timeRate;
+            GetMsg();
+        }
+        else
+        {
+            count -= Time.deltaTime;
+        }
     }
     private void OnDestroy()
     {
@@ -79,12 +92,24 @@ public class Net : MonoBehaviour
     {
         string msg=await udpClient.Receive();
         JObject ret = JObject.Parse(msg);
-        ObjectController.Instance.Create((int)ret["index"],(string)ret["type"]);
+        //ObjectController.Instance.Create((int)ret["index"],(string)ret["type"]);
         ReceiveAsync();
     }
     public async void GetMsg()
     {
+        string url =serverUrlBase+ "GetMsg";
         //StringContent content = new StringContent();
-        HttpResponseMessage response=await client.PostAsync(serverUrl, null);
+        HttpResponseMessage response=await client.PostAsync(url, null);
+        string result = response.Content.ReadAsStringAsync().Result;
+        JArray json = JArray.Parse(result);
+        if (json == null)
+            return;
+        for (int i = 0; i < json.Count; i++)
+        {
+            ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
+            int index = (int)json[i]["ObjectIndex"];
+            ObjectController.Instance.Create(index, type);
+        }
+        
     }
 }
