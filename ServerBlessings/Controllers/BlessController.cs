@@ -37,25 +37,29 @@ namespace Web.Controller
         {
             return "返回：" + value;
         }
-        [HttpPost]
-        public bool AddMsg(JObject value)
+        [HttpPost("addmsg")]
+        public JObject AddMsg(JObject value)
         {
             int userId = (int)value["UserId"];
             string objType = (string)value["ObjType"];
             string msg = (string)value["Msg"];
             int objIdx = (int)value["ObjIdx"];
             bool result=Handle.AddMsg(msg,userId,objType,objIdx);
-            return result;
+            JObject json = new JObject();
+            json["Result"] = result;
+            return json;
         }
-        [HttpPost]
-        public bool AddUser(JObject value)
+        [HttpPost("adduser")]
+        public JObject AddUser(JObject value)
         {
             string openId = (string)value["OpenId"];
             string nickName = (string)value["Nickname"];
             bool result = Handle.AddUser(nickName, openId);
-            return result;
+            JObject json = new JObject();
+            json["Result"] = result;
+            return json;
         }
-        [HttpPost]
+        [HttpPost("GetMsg")]
         public JArray GetMsg()
         {
             JArray result = new JArray();
@@ -64,7 +68,7 @@ namespace Web.Controller
             {
                 JObject item = new JObject();
                 item["ID"] = (int)row["ID"];
-                item["UserID"] = (string)row["UserID"];
+                item["UserID"] = (int)row["UserID"];
                 item["Message"] = (string)row["Message"];
                 item["CreateTime"] = (DateTime)row["CreateTime"];
                 item["ObjectIndex"] = (int)row["ObjectIndex"];
@@ -73,15 +77,22 @@ namespace Web.Controller
             }
             return result;
         }
-        [HttpPost]
-        public int GetUserId(string openId)
+        [HttpPost("getuserid")]
+        public JObject GetUserId(JObject jsonIn)
         {
-            return  Handle.GetUserId(openId);
+            JObject json = new JObject();
+            json["Result"] = -1;
+            if (jsonIn == null|| jsonIn["OpenId"]==null)
+                return json;
+             json["Result"]=Handle.GetUserId(jsonIn["OpenId"].ToString());
+            return json;
         }
-        [HttpPost]
-        public bool SetMsgReaded(int id)
+        [HttpPost("setmsgreaded")]
+        public JObject SetMsgReaded(int id)
         {
-            return Handle.SetMsgReaded(id);
+            JObject json = new JObject();
+            json["Result"]= Handle.SetMsgReaded(id);
+            return json;
         }
     }
 }

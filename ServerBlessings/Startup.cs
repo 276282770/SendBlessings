@@ -9,6 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Web;
+using Codu.Data.DataBase;
 
 namespace ServerBlessings
 {
@@ -18,6 +19,7 @@ namespace ServerBlessings
         {
             Configuration = configuration;
             //Handle.Listen();
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -27,8 +29,8 @@ namespace ServerBlessings
         {
             services.AddRazorPages();
             services.AddControllers().AddNewtonsoftJson();
-            
 
+            SqlHelper.ConnectionString = Configuration["ConnectionString"];
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
