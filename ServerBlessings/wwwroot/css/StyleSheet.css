@@ -1,0 +1,76 @@
+﻿body {
+}
+.bg{
+    background:url("../images/beijing.jpg") no-repeat;
+    background-size:100% 100%;
+}
+.btm{
+    padding:20px 0;
+    background-color:#000000;
+    text-align:center;
+    width:100%;
+    position:fixed;
+    bottom:0px;
+    z-index:99;
+}
+.title {
+    color: #FFF;
+    font-size: 45px;
+    padding: 10px 100px;
+    
+}
+    .title ul {
+        list-style-type: none;
+        padding: 0;
+        display: -webkit-flex;
+        display: flex;
+        justify-content: space-between;
+    }
+.title ul li{
+    padding:10px;
+}
+.b5{
+    border-bottom:5px solid #fff;
+}
+#youjiantou{
+    position:fixed;
+    top:800px;
+    right:20px;
+    width:42px;
+}
+#zuojiantou {
+    position: fixed;
+    top: 800px;
+    left: 20px;
+    width: 42px;
+}
+#mainContent{
+    padding:10px 50px;
+}
+#mainContent .cRow {
+    display: -webkit-flex;
+    display: flex;
+    justify-content:space-between;
+    margin-top:50px;
+}
+
+.b2 {
+    display: -webkit-flex;
+    display: flex;
+    justify-content:center;
+}
+.p2{
+    position:absolute;
+    width:100%;
+    height:100%;
+    display:flex;
+    justify-content:center;
+    top:0;
+}
+.p3{
+    width:100%;
+    height:100%;
+    position:absolute;
+    top:0;
+    text-align:center;
+}

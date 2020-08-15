@@ -1,0 +1,103 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>送祝福</title>
+    <script src="lib/jquery/dist/jquery.js"></script>
+    <script src="js/JavaScript.js"></script>
+    <link href="css/StyleSheet.css" rel="stylesheet" />
+</head>
+<body style="background-color:#000;">
+    <div style="width:100vw;height:100vh;">
+        <div id="home" style="width:100%;height:100%;z-index:999;">
+            <img src="images/0首页.jpg" style="width:100%;height:100%;" />
+        </div>
+        <div id="mainPg" style="width:100%;height:100%;display:none;" class="bg" index="0">
+            <div style="height:100px;background-color:#000;"></div>
+            <div id="title" class="title">
+                <ul>
+                    <li class="b5" id="light" onclick="titleClick(this.id)">孔明灯</li>
+                    <li id="flash" onclick="titleClick(this.id)">烟花</li>
+                    <li id="tree" onclick="titleClick(this.id)">许愿树</li>
+                </ul>
+            </div>
+            <div id="mainContent" style="">
+                <div class="ctnt" id="ctntLight">
+                    <div class="cRow">
+                        <div onclick="onShowP2(0,'light')"><img src="images/deng1.png" /></div>
+                        <div onclick="onShowP2(1,'light')"><img src="images/deng2.png" /></div>
+                        <div onclick="onShowP2(2,'light')"><img src="images/deng3.png" /></div>
+                    </div>
+                    <div class="cRow">
+                        <div onclick="onShowP2(3,'light')"><img src="images/deng4.png" /></div>
+                        <div onclick="onShowP2(4,'light')"><img src="images/deng5.png" /></div>
+                        <div onclick="onShowP2(5,'light')"><img src="images/deng6.png" /></div>
+                    </div>
+                    <div class="cRow">
+                        <div onclick="onShowP2(6,'light')"><img src="images/deng7.png" /></div>
+                        <div onclick="onShowP2(7,'light')"><img src="images/deng8.png" /></div>
+                        <div onclick="onShowP2(8,'light')"><img src="images/deng9.png" /></div>
+                    </div>
+                </div>
+                <div class="ctnt" id="ctntFlash" style="display:none;">
+                    <div class="cRow">
+                        <div onclick="onShowP2(0,'flash')"><img src="images/yanhua1.png" /></div>
+                        <div onclick="onShowP2(1,'flash')"><img src="images/yanhua2.png" /></div>
+                        <div onclick="onShowP2(2,'flash')"><img src="images/yanhua3.png" /></div>
+                    </div>
+                    <div class="cRow">
+                        <div onclick="onShowP2(3,'flash')"><img src="images/yanhua4.png" /></div>
+                        <div onclick="onShowP2(4,'flash')"><img src="images/yanhua5.png" /></div>
+                        <div onclick="onShowP2(5,'flash')"><img src="images/yanhua6.png" /></div>
+                    </div>
+                    <div class="cRow">
+                        <div onclick="onShowP2(6,'flash')"><img src="images/yanhua7.png" /></div>
+                        <div onclick="onShowP2(7,'flash')"><img src="images/yanhua8.png" /></div>
+                        <div onclick="onShowP2(8,'flash')"><img src="images/yanhua9.png" /></div>
+                    </div>
+                </div>
+                <div class="ctnt" id="ctntTree" style="display:none;">
+                    <img src="images/shu2.png" style="width:100%;" onclick="onShowP2(8,'tree')" />
+                </div>
+            </div>
+            <div id="youjiantou" onclick="onNext()">
+                <img src="images/jiantouyou.png" />
+            </div>
+            <div id="zuojiantou" onclick="onPrevious()">
+                <img src="images/jiantouzuo.png" />
+            </div>
+            <div class="p2" style="display:none;">
+                <div>
+                    <div style=" background: url(images/zhanshikuang.png) no-repeat; width: 752px; height: 952px;margin-top:300px;">
+                        <div style="height: 70px; font-size: 50px; color: #ffff; text-align: center; padding: 15px;">烟花</div>
+                        <div style="padding: 70px 10px 130px 10px;display: flex; align-items: center; justify-content: center; height: 650px;">
+                        <img src="images/deng7.png" style="width: 350px;" id="imgP2Obj" />
+                        </div>
+                    </div>
+                    <div style="background: url(images/shurukuang.png) no-repeat; background-size: 100% 100%; margin-top: 30px; height: 350px;">
+                        <textarea id="txtMsg" style="margin: 100px 50px 50px 50px; width: 650px; height: 200px; background-color: transparent; font-size: 40px; color: #FFF;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p3" style="display:none;">
+                <div style="margin-top:300px;">
+                    <img src="images/jiantoushang.png" />
+                </div>
+                <div style="margin-top:200px;" id="dvP3Obj">
+                    <img id="imgP3Obj" src="images/deng1.png" style="width:300px;" />
+                </div>
+            </div>
+            <div class="btm">
+                <div class="b1" style="">
+                    <img src="images/shuaxin.png" id="btnFlush" />
+                </div>
+                <div class="b2" style="display:none;">
+                    <div style="margin-right:100px;" onclick="p2Cancel()"><img src="images/anniushanchu.png" /></div>
+                    <div onclick="p2Ok()"><img src="images/anniuduihao.png" /></div>
+                </div>
+                <div><button onclick="send()">abcdeeff</button></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
