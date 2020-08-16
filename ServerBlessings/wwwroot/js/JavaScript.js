@@ -27,9 +27,11 @@ var isP3ObjDown = false;
 var oriY;
 var index;
 var type;
+var openId = "abcd";
+var msg = "";
 function titleClick(tp) {
     var light = $("#light");
-    var flash = $("#flash");
+    var firework = $("#firework");
     var tree = $("#tree");
     var mainPg = $("#mainPg");
     var lightCtnt = $("#ctntLight");
@@ -41,18 +43,18 @@ function titleClick(tp) {
                 return;
             }
             light.addClass("b5");
-            flash.removeClass("b5");
+            firework.removeClass("b5");
             tree.removeClass("b5");
             mainPg.attr("index", "0");
             lightCtnt.fadeIn("fast");
             flashCtnt.hide();
             treeCtnt.hide();
         }; break;
-        case "flash": {
-            if (flash.attr("class") == "b5")
+        case "firework": {
+            if (firework.attr("class") == "b5")
                 return;
             light.removeClass("b5");
-            flash.addClass("b5");
+            firework.addClass("b5");
             tree.removeClass("b5");
             mainPg.attr("index", "1");
             lightCtnt.hide();
@@ -63,7 +65,7 @@ function titleClick(tp) {
             if (tree.attr("class") == "b5")
                 return;
             light.removeClass("b5");
-            flash.removeClass("b5");
+            firework.removeClass("b5");
             tree.addClass("b5");
             mainPg.attr("index", "2");
             lightCtnt.hide();
@@ -73,29 +75,30 @@ function titleClick(tp) {
     }
 }
 function onNext() {
-    var titles = ["light", "flash", "tree"];
+    var titles = ["light", "firework", "tree"];
     var nextIdx = parseInt( $("#mainPg").attr("index")) + 1;
     if (nextIdx >= titles.length)
         return;
     titleClick(titles[nextIdx]);
 }
 function onPrevious() {
-    var titles = ["light", "flash", "tree"];
+    var titles = ["light", "firework", "tree"];
     var nextIdx = parseInt( $("#mainPg").attr("index")) - 1;
     if (nextIdx < 0)
         return;
     titleClick(titles[nextIdx]);
 }
 function p2Ok() {
-    var msg = $("#txtMsg").val();
-    if (msg == "") {
+    var _msg = $("#txtMsg").val();
+    if (_msg == "") {
         alert("还是写一写东西吧");
         return;
     }
-    if (msg.length > 50) {
+    if (_msg.length > 50) {
         alert("字数控制在50字以下");
         return;
     }
+    msg = _msg;
     onShowP3();
 }
 function p2Cancel() {
@@ -108,9 +111,9 @@ function onShowP2(idx, tp) {
     type = tp;
     var imgSrc;
     switch (tp) {
-        case "light": imgSrc = "images/deng" + (idx + 1) + ".png"; break;
-        case "flash": imgSrc = "images/yanhua" + (idx + 1) + ".png"; break;
-        case "tree": imgSrc = "images/shu2.png"; break;
+        case "Light": imgSrc = "images/deng" + (idx + 1) + ".png"; break;
+        case "Firework": imgSrc = "images/yanhua" + (idx + 1) + ".png"; break;
+        case "Tree": imgSrc = "images/shu2.png"; break;
     }
     $("#imgP2Obj").attr("src", imgSrc);
     $(".p2").slideDown();
@@ -156,6 +159,7 @@ function p3ObjUp(e) {
         $("#dvP3Obj").css({ "margin-top": oriP3ObjMt+"px" });
         return;
     }
+    send();
     alert("恭喜，您的祝福已发送");
     window.location.reload();
 }
@@ -163,9 +167,14 @@ function removePX(oriStr) {
     return parseInt( oriStr.substr(0, oriStr.length - 2));
 }
 function send() {
-    let url = document.location.origin + "/API";
-    let data = { "index": index, "type": type };
-    $.post(url,  data, function (ret) {
-        console.log(ret);
+    let url = document.location.origin + "/API/addmsg";
+    let data = { "UserId": 1, "Msg": msg, "ObjIdx": index, "ObjType": type };
+    //$.post(url,  data, function (ret) {
+    //    console.log(ret);
+    //},"json");
+    $.ajax({
+        url: url, contentType: "application/json", method: "POST", data: JSON.stringify( data), success: function (ret) {
+            console.log(ret);
+        }
     });
 }

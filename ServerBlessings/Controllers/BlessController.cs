@@ -68,9 +68,9 @@ namespace Web.Controller
             {
                 JObject item = new JObject();
                 item["ID"] = (int)row["ID"];
-                item["UserID"] = (int)row["UserID"];
+                item["Nickname"] = (string)row["Nickname"];
                 item["Message"] = (string)row["Message"];
-                item["CreateTime"] = (DateTime)row["CreateTime"];
+                //item["CreateTime"] = (DateTime)row["CreateTime"];
                 item["ObjectIndex"] = (int)row["ObjectIndex"];
                 item["ObjectType"] = (string)row["ObjectType"];
                 result.Add(item);

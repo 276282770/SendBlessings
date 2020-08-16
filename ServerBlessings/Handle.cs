@@ -70,7 +70,9 @@ namespace Web
         public static DataTable GetMsg()
         {
             DateTime dt = default;
-            string sql = "SELECT * FROM CONTENT WHERE ISSHOWED=0";
+            string sql = @"SELECT C.ID, U.Nickname,C.Message,C.ObjectIndex,C.ObjectType FROM CONTENT C
+LEFT JOIN [Users] U ON C.UserID=U.ID
+WHERE ISSHOWED=0";
             DataTable result = SqlHelper.ExecuteSql(sql);
             return result;
         }
