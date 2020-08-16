@@ -97,18 +97,26 @@ public class Net : MonoBehaviour
     }
     public async void GetMsg()
     {
-        string url =serverUrlBase+ "GetMsg";
-        //StringContent content = new StringContent();
-        HttpResponseMessage response=await client.PostAsync(url, null);
+        string urlGetMsg =serverUrlBase+ "GetMsg";
+        string urlsetmsgreaded= serverUrlBase + "urlsetmsgreaded";
+        HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
         string result = response.Content.ReadAsStringAsync().Result;
         JArray json = JArray.Parse(result);
         if (json == null)
             return;
+        if (json.Count == 0)
+            return;
+        Debug.Log($"[{DateTime.Now}]接收到{json.Count}条消息.");
         for (int i = 0; i < json.Count; i++)
         {
             ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
             int index = (int)json[i]["ObjectIndex"];
             ObjectController.Instance.Create(index, type);
+            Debug.Log($"[{DateTime.Now}]播放#{json["ID"]}消息");
+
+            JObject jSetMsgReaded = new JObject();
+            jSetMsgReaded["ID"] = json["ID"];
+            StringContent contentSetMsgReaded = new StringContent(jSetMsgReaded.ToString());
         }
         
     }

@@ -29,7 +29,7 @@ public class Fireworks : MonoBehaviour
         //}
         if (life < 0)
         {
-            //Destroy(gameObject);
+            Destroy(gameObject);
         }
         else
             life -= Time.deltaTime;
