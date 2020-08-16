@@ -115,12 +115,14 @@ public class Net : MonoBehaviour
         {
             ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
             int index = (int)json[i]["ObjectIndex"];
-            ObjectController.Instance.Create(index, type);
+            string text = $"【{json[i]["Nickname"]}】{json[i]["Message"]}";
+            ObjectController.Instance.Create(index, type,text);
             Debug.Log($"[{DateTime.Now}]播放#{json[i]["ID"]}消息");
 
             JObject jSetMsgReaded = new JObject();
             jSetMsgReaded["ID"] = json[i]["ID"];
-            await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
+            string retSetMsgReaded= await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
+            Debug.Log(retSetMsgReaded);
            
         }
         

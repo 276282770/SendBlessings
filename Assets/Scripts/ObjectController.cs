@@ -67,4 +67,9 @@ public class ObjectController : MonoBehaviour
             case ObjectType.Light:CreateLight(index);break;
         }
     }
+    public void Create(int index, ObjectType type,string text)
+    {
+        Create(index, type);
+        MessageController.Instance.CreateText(text);
+    }
 }

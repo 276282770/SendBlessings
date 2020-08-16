@@ -5,25 +5,32 @@ using UnityEngine.UI;
 
 public class Message : MonoBehaviour
 {
-    public string msg;
-    public string nickname;
-    Text text;
+
+    
     RectTransform rectTransform;
     // Start is called before the first frame update
     void Start()
     {
-        text = GetComponent<Text>();
         rectTransform = GetComponent<RectTransform>();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if(rectTransform.rect.>Camera.main.orthographicSize)
-        Debug.Log(rectTransform.rect.x);
+        if (transform.position.x>= -960)
+        {
+            transform.Translate(Vector3.left);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        //Debug.Log(rectTransform.position.x+" "+transform.position.x);
+        //Debug.LogError(transform.position.x+" "+transform.position.y);
     }
-    public void SetMessage(string msg,string nickname)
+    public void SetMessage(string msg)
     {
-        text.text = $"【{nickname}】{msg}";
+       GetComponent<Text>().text = msg;
     }
 }
