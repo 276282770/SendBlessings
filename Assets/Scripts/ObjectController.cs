@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class ObjectController : MonoBehaviour
 {
-    public Fireworks[] preFireworks;
+    public Firework[] preFireworks;
     public Light[] preLights;
     public GameObject tree;
     public int margin = 100;
@@ -41,7 +41,7 @@ public class ObjectController : MonoBehaviour
         float y = -(orthSize + 0.5f);
         float top = Random.Range(0, orthSize - 1);
         float scale = Random.Range(0.3f,1f);
-        Fireworks fireworks= Instantiate(preFireworks[index], new Vector3(x, top), Quaternion.identity);
+        Firework fireworks= Instantiate(preFireworks[index], new Vector3(x, top), Quaternion.identity);
         fireworks.transform.localScale = new Vector3(scale,scale,1);
     }
     public void CreateLight(int index)
@@ -63,7 +63,7 @@ public class ObjectController : MonoBehaviour
     {
         switch (type)
         {
-            case ObjectType.Fireworks:CreateFireworks(index);break;
+            case ObjectType.Firework:CreateFireworks(index);break;
             case ObjectType.Light:CreateLight(index);break;
         }
     }

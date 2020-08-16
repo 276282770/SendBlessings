@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
 
-public class Fireworks : MonoBehaviour
+public class Firework : MonoBehaviour
 {
    
     public float speed=10;

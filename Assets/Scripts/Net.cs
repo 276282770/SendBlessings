@@ -8,6 +8,8 @@ using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Net.Http;
 using System;
+using System.Threading.Tasks;
+using UnityEditor.PackageManager;
 
 public class Net : MonoBehaviour
 {
@@ -16,7 +18,7 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://localhost:5000/API/";
+    string serverUrlBase = "http://192.168.2.101:5000/API/";
     HttpClient client=new HttpClient();
 
     float count=0;
@@ -27,6 +29,7 @@ public class Net : MonoBehaviour
         //ReadIPEndPoint();
         //Debug.Log(ip+" "+point);
         //SendEcho();
+ 
     }
 
     // Update is called once per frame
@@ -40,7 +43,7 @@ public class Net : MonoBehaviour
         if (count <= 0)
         {
             count = timeRate;
-            GetMsg();
+            ReceiveMsg();
         }
         else
         {
@@ -95,12 +98,13 @@ public class Net : MonoBehaviour
         //ObjectController.Instance.Create((int)ret["index"],(string)ret["type"]);
         ReceiveAsync();
     }
-    public async void GetMsg()
+    public async void ReceiveMsg()
     {
         string urlGetMsg =serverUrlBase+ "GetMsg";
-        string urlsetmsgreaded= serverUrlBase + "urlsetmsgreaded";
-        HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
-        string result = response.Content.ReadAsStringAsync().Result;
+        string urlSetMsgReaded= serverUrlBase + "setmsgreaded";
+        //HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
+        JObject jGetMsgPara = new JObject();
+        string result = await PostAsync(urlGetMsg, jGetMsgPara.ToString());
         JArray json = JArray.Parse(result);
         if (json == null)
             return;
@@ -112,12 +116,21 @@ public class Net : MonoBehaviour
             ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
             int index = (int)json[i]["ObjectIndex"];
             ObjectController.Instance.Create(index, type);
-            Debug.Log($"[{DateTime.Now}]播放#{json["ID"]}消息");
+            Debug.Log($"[{DateTime.Now}]播放#{json[i]["ID"]}消息");
 
             JObject jSetMsgReaded = new JObject();
-            jSetMsgReaded["ID"] = json["ID"];
-            StringContent contentSetMsgReaded = new StringContent(jSetMsgReaded.ToString());
+            jSetMsgReaded["ID"] = json[i]["ID"];
+            await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
+           
         }
         
+    }
+    public async Task<string> PostAsync(string url,string jParameters)
+    {
+        StringContent content =new StringContent(jParameters);
+        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        HttpResponseMessage response = await client.PostAsync(url, content);
+        string sResult = response.Content.ReadAsStringAsync().Result;
+        return sResult;
     }
 }

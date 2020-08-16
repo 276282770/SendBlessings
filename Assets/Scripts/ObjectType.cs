@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 public enum ObjectType
 {
-    Fireworks,
+    Firework,
     Light,
     Tree
 }
