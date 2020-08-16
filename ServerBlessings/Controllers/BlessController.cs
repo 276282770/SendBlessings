@@ -88,8 +88,9 @@ namespace Web.Controller
             return json;
         }
         [HttpPost("setmsgreaded")]
-        public JObject SetMsgReaded(int id)
+        public JObject SetMsgReaded(JObject jsonIn)
         {
+            int id = (int)jsonIn["ID"];
             JObject json = new JObject();
             json["Result"]= Handle.SetMsgReaded(id);
             return json;
