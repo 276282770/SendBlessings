@@ -1,15 +1,11 @@
 ﻿using ClientController;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using System.IO;
-using System.Net;
-using System.Text;
 using Newtonsoft.Json.Linq;
-using System.Net.Http;
 using System;
+using System.IO;
+using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
-using UnityEditor.PackageManager;
+using UnityEngine;
 
 public class Net : MonoBehaviour
 {
@@ -18,7 +14,7 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://192.168.2.101:5000/API/";
+    string serverUrlBase = "http://zf.cracre.vip/API/";
     HttpClient client=new HttpClient();
 
     float count=0;

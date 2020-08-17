@@ -23,9 +23,10 @@ public class MessageController : MonoBehaviour
             bool match = false;
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i) != null)
+                Transform child = transform.GetChild(i);
+                if (child != null)
                 {
-                    if(transform.position.y==j)
+                    if(child.position.y==j)
                     {
                         match = true;
                         break;
@@ -38,7 +39,7 @@ public class MessageController : MonoBehaviour
                 break;
             }
         }
-        Vector3 position = new Vector3(maxX, maxY, 0);
+        Vector3 position = new Vector3(maxX, y, 0);
         Message newItem=Instantiate(preText, position, Quaternion.identity, transform);
         newItem.SetMessage(text);
     }
