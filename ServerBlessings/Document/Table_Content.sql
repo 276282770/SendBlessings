@@ -1,7 +1,7 @@
 USE [Bless]
 GO
 
-/****** Object:  Table [dbo].[Content]    Script Date: 2020/7/13 7:39:20 ******/
+/****** Object:  Table [dbo].[Content]    Script Date: 2020/8/23 16:23:21 ******/
 SET ANSI_NULLS ON
 GO
 
@@ -19,8 +19,11 @@ CREATE TABLE [dbo].[Content](
  CONSTRAINT [PK_Content] PRIMARY KEY CLUSTERED 
 (
 	[ID] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[Content] ADD  CONSTRAINT [DF_Content_CreateTime]  DEFAULT (getdate()) FOR [CreateTime]
 GO
 
 ALTER TABLE [dbo].[Content] ADD  CONSTRAINT [DF_Content_IsShowed]  DEFAULT ((0)) FOR [IsShowed]
