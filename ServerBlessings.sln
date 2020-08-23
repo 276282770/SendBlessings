@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Web", "ServerBlessings\Web.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientController", "ClientController\ClientController.csproj", "{7792038B-FC58-426B-9635-CA4822FB11F8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCommon", "WebCommon\WebCommon.csproj", "{BD508318-0131-4E01-91A3-13C922E9C4CB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{45512369-C9C1-4C89-B50B-0BD242DF9C6F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +23,10 @@ Global
 		{7792038B-FC58-426B-9635-CA4822FB11F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7792038B-FC58-426B-9635-CA4822FB11F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7792038B-FC58-426B-9635-CA4822FB11F8}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BD508318-0131-4E01-91A3-13C922E9C4CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BD508318-0131-4E01-91A3-13C922E9C4CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BD508318-0131-4E01-91A3-13C922E9C4CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BD508318-0131-4E01-91A3-13C922E9C4CB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{45512369-C9C1-4C89-B50B-0BD242DF9C6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45512369-C9C1-4C89-B50B-0BD242DF9C6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{45512369-C9C1-4C89-B50B-0BD242DF9C6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45512369-C9C1-4C89-B50B-0BD242DF9C6F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

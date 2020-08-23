@@ -14,7 +14,7 @@ namespace Web.Controllers
         [HttpGet("BackCode")]
         public string BackCode(string code,string state)
         {
-             
+            return "aabbcc";
         }   
         [HttpGet("AA")]
     public string AA()
