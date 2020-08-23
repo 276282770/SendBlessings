@@ -1,7 +1,7 @@
 ﻿$(document).ready(
     
     function () {
-
+        userId = getUrlParam("userId");
         setTimeout(
             
             function () {
@@ -30,6 +30,7 @@ var index;
 var type;
 var openId = "abcd";
 var msg = "";
+var userId = 1;
 function titleClick(tp) {
     var light = $("#light");
     var firework = $("#firework");
@@ -169,7 +170,7 @@ function removePX(oriStr) {
 }
 function send() {
     let url = document.location.origin + "/API/addmsg";
-    let data = { "UserId": 1, "Msg": msg, "ObjIdx": index, "ObjType": type };
+    let data = { "UserId": userId, "Msg": msg, "ObjIdx": index, "ObjType": type };
     //$.post(url,  data, function (ret) {
     //    console.log(ret);
     //},"json");
