@@ -37,6 +37,7 @@ namespace WebApplication1
             //context.Response.Write(s)
             //    ;
             //return;
+            SqlHelper.ConnectionString = "server=.;uid=sa;pwd=123456;database=bless";
 
             try
             {
@@ -160,18 +161,18 @@ namespace WebApplication1
         int GetUserId(string openId)
         {
             int id = -1;
-            string sql = $"SELECT ID from [content] where openid={openId}";
+            string sql = $"SELECT ID from [users] where openid='{openId}'";
             object o = SqlHelper.ExecuteScalar(sql);
             if (o != null)
-                id = int.Parse((string)o);
+                id = (int)o;
             return id;
         }
         int AddUser(string openId,string nickname,string province,bool sex,string city,string country,string headimgurl,string privilege,string unionid)
         {
             int id=-1;
-            string sql = @"INSERT USERS(OPEINID,NICKNAME,PROVINCE,SEX,CITY,COUNTRY,HEADIMGURL,PRIVILEGE,UNIONID) 
+            string sql = @"INSERT USERS(OPENID,NICKNAME,PROVINCE,SEX,CITY,COUNTRY,HEADIMGURL,PRIVILEGE,UNIONID) 
                 VALUES(@OPENID,@NICKNAME,@PROVINCE,@SEX,@CITY,@COUNTRY,@HEADIMGURL,@PRIVILEGE,@UNIONID)
-                SELECT @@IDENTIRY";
+                SELECT @@IDENTItY";
             SqlParameter[] pars = new SqlParameter[] { 
             new SqlParameter("@OPENID",openId),
             new SqlParameter("@NICKNAME",nickname),
@@ -185,7 +186,7 @@ namespace WebApplication1
             };
             object o=SqlHelper.ExecuteScalar(sql, pars);
             if(o!=null)
-                id=(int)o;
+                id=int.Parse(o.ToString());
             return id;
         }
         //JObject GetOpenId(string code)
