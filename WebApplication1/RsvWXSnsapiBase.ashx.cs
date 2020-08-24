@@ -26,7 +26,9 @@ namespace WebApplication1
             WriteFile();
             string code = paras["code"];
             string state = paras["state"];
-
+            //context.Response.Write("清除缓存");
+            //context.Response.End();
+            //return;
 
             //HttpClient client = new HttpClient();
             //HttpResponseMessage response= client.GetAsync("http://www.baidu.com").Result;
@@ -50,6 +52,11 @@ namespace WebApplication1
                     int id = 0;
                     if (openId != null)
                         id = GetUserId(openId);
+                    else
+                    {
+                        context.Response.Write($"错误:{ret.ToString()}");
+                        return;
+                    }
                     if (id > 0)
                     {
                         context.Response.Redirect(url_home + "?userid=" + id.ToString());
@@ -61,7 +68,7 @@ namespace WebApplication1
                         if (retUserInfo != null)
                         {
                             id = AddUser((string)retUserInfo["openid"], (string)retUserInfo["nickname"], (string)retUserInfo["province"], (int)retUserInfo["sex"] == 1 ? true : false, (string)retUserInfo["city"],
-                                (string)retUserInfo["country"], (string)retUserInfo["headimgurl"], (string)retUserInfo["privilege"], (string)retUserInfo["unionid"]);
+                                (string)retUserInfo["country"], (string)retUserInfo["headimgurl"], retUserInfo["privilege"].ToString(), (string)retUserInfo["unionid"]);
                             context.Response.Redirect(url_home + "?userid=" + id.ToString());
                         }
                     }
@@ -169,6 +176,8 @@ namespace WebApplication1
         }
         int AddUser(string openId,string nickname,string province,bool sex,string city,string country,string headimgurl,string privilege,string unionid)
         {
+            if (unionid == null)
+                unionid = "";
             int id=-1;
             string sql = @"INSERT USERS(OPENID,NICKNAME,PROVINCE,SEX,CITY,COUNTRY,HEADIMGURL,PRIVILEGE,UNIONID) 
                 VALUES(@OPENID,@NICKNAME,@PROVINCE,@SEX,@CITY,@COUNTRY,@HEADIMGURL,@PRIVILEGE,@UNIONID)

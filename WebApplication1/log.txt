@@ -6,3 +6,15 @@
 参数名: value
 值不能为 null。
 参数名: value
+Can not convert Array to String.
+Can not convert Array to String.
+Can not convert Array to String.
+Can not convert Array to String.
+Can not convert Array to String.
+Can not convert Array to String.
+参数化查询 '(@OPENID nvarchar(28),@NICKNAME nvarchar(4),@PROVINCE nvarchar(2' 需要参数 '@UNIONID'，但未提供该参数。
+参数化查询 '(@OPENID nvarchar(28),@NICKNAME nvarchar(4),@PROVINCE nvarchar(2' 需要参数 '@UNIONID'，但未提供该参数。
+参数化查询 '(@OPENID nvarchar(28),@NICKNAME nvarchar(4),@PROVINCE nvarchar(2' 需要参数 '@UNIONID'，但未提供该参数。
+参数化查询 '(@OPENID nvarchar(28),@NICKNAME nvarchar(4),@PROVINCE nvarchar(2' 需要参数 '@UNIONID'，但未提供该参数。
+正在中止线程。
+正在中止线程。
