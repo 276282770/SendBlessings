@@ -18,7 +18,7 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://192.168.2.101:5000/API/";
+    string serverUrlBase = "http://192.168.43.232:5000/API/";
     HttpClient client=new HttpClient();
 
     float count=0;
