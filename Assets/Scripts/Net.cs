@@ -14,7 +14,7 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://zf.cracre.vip/API/";
+    string serverUrlBase = "http://zf.cracre.vip:81/API/";
     HttpClient client=new HttpClient();
 
     float count=0;
