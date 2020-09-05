@@ -7,6 +7,7 @@ using System.Net;
 using Codu.Data.DataBase;
 using System.Data;
 using System.Data.SqlClient;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace Web
 {
@@ -76,6 +77,19 @@ WHERE ISSHOWED=0";
             DataTable result = SqlHelper.ExecuteSql(sql);
             return result;
         }
-       
+       public static int GetSettingType()
+        {
+            int result = -1;
+            string sql = "select setvalue from setting where setname='type'";
+            object o=SqlHelper.ExecuteScalar(sql);
+            result = int.Parse((string)o);
+            return result;
+        }
+        public static bool SetType(int i)
+        {
+            string sql = $"update setting set setvalue={i} where setname='Type'";
+            bool result = SqlHelper.ExecuteNonQuery(sql);
+            return result;
+        }
     }
 }

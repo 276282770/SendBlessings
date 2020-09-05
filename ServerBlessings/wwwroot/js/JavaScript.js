@@ -1,7 +1,12 @@
 ﻿$(document).ready(
     
     function () {
-        userId = getUrlParam("userId");
+        let pUserId = getUrlParam("userid");
+        if (pUserId != null) {
+            userId = pUserId;
+        }
+
+        getType();
         setTimeout(
             
             function () {
@@ -28,6 +33,7 @@ var isP3ObjDown = false;
 var oriY;
 var index;
 var type;
+var typeNames = ["light", "firework", "tree"];
 var openId = "abcd";
 var msg = "";
 var userId = 1;
@@ -113,9 +119,9 @@ function onShowP2(idx, tp) {
     type = tp;
     var imgSrc;
     switch (tp) {
-        case "Light": imgSrc = "images/deng" + (idx + 1) + ".png"; break;
-        case "Firework": imgSrc = "images/yanhua" + (idx + 1) + ".png"; break;
-        case "Tree": imgSrc = "images/shu2.png"; break;
+        case "light": imgSrc = "images/deng" + (idx + 1) + ".png"; break;
+        case "firework": imgSrc = "images/yanhua" + (idx + 1) + ".png"; break;
+        case "tree": imgSrc = "images/shu2.png"; break;
     }
     $("#imgP2Obj").attr("src", imgSrc);
     $(".p2").slideDown();
@@ -176,6 +182,22 @@ function send() {
     //},"json");
     $.ajax({
         url: url, contentType: "application/json", method: "POST", data: JSON.stringify( data), success: function (ret) {
+            console.log(ret);
+        }
+    });
+}
+function getType() {
+    let url = document.location.origin + "/API/GetSettingType";
+    let data = { "UserId": userId, "Msg": msg, "ObjIdx": index, "ObjType": type };
+    //$.post(url,  data, function (ret) {
+    //    console.log(ret);
+    //},"json");
+    let that = this;
+    $.ajax({
+        url: url, contentType: "application/json", method: "POST", data: {}, success: function (ret) {
+            idx = ret.Data;
+            that.type = that.typeNames[idx];
+            that.titleClick(that.type);
             console.log(ret);
         }
     });

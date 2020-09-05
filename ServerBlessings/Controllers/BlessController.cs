@@ -95,5 +95,20 @@ namespace Web.Controller
             json["Result"]= Handle.SetMsgReaded(id);
             return json;
         }
+        [HttpPost("GetSettingType")]
+        public JObject GetSettingType()
+        {
+            int id = Handle.GetSettingType();
+            JObject jRet = new JObject();
+            jRet["Data"] = id;
+            return jRet;
+        }
+        [HttpPost("SetSettingType")]
+        public JObject SetSettingType(JObject jDataIn)
+        {
+            JObject jRet = new JObject();
+            jRet["Result"] = Handle.SetType((int)jDataIn["ID"]);
+            return jRet;
+        }
     }
 }
