@@ -107,7 +107,7 @@ namespace Web.Controller
         public JObject SetSettingType(JObject jDataIn)
         {
             JObject jRet = new JObject();
-            jRet["Result"] = Handle.SetType((int)jDataIn["ID"]);
+            jRet["Result"] = Handle.SetType((int)jDataIn["index"]);
             return jRet;
         }
     }

@@ -114,6 +114,15 @@ function p2Cancel() {
     $(".b1").show();
     $(".b2").hide();
 }
+function onShowP1() {
+    $(".b1").show();
+    $(".b2").hide();
+    $(".p2").hide();
+    $(".p3").hide();
+    $("#mainContent").show();
+    $("#txtMsg").val("");
+    $("#dvP3Obj").css({ "margin-top": oriP3ObjMt + "px" });
+}
 function onShowP2(idx, tp) {
     index = idx;
     type = tp;
@@ -169,7 +178,8 @@ function p3ObjUp(e) {
     }
     send();
     alert("恭喜，您的祝福已发送");
-    window.location.reload();
+    //window.location.reload();
+    onShowP1();
 }
 function removePX(oriStr) {
     return parseInt( oriStr.substr(0, oriStr.length - 2));
