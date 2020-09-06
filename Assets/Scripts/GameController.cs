@@ -6,31 +6,85 @@ using UnityEngine;
 
 public class GameController : MonoBehaviour
 {
-    static string configPath = Application.dataPath+"/config.txt";
+    string configPath ;
+    //static string bgLightPath = Application.dataPath+"/bgLight.jpg";
+    //static string bgFireworkPath = Application.dataPath+"/bgFirework.jpg";
+    //static string bgTreePath = Application.dataPath+"/bgTree.jpg";
     public static GameController Instance;
     public GameObject[] scenes;
-    Net net = new Net();
+    public string[] bgPaths;
+    Net net;
     public ObjectType objectType;
 
+    private void Awake()
+    {
+        objectType = ObjectType.firework;
+        configPath = Application.dataPath + "/config.txt";
+        bgPaths = new string[3];
+        bgPaths[0] = Application.dataPath + "/bgLight.jpg";
+        bgPaths[1] = Application.dataPath + "/bgFirework.jpg";
+        bgPaths[2] = Application.dataPath + "/bgTree.jpg";
+        net = GetComponent<Net>();
+        LoadBg();
+        GetSettingType();
+    }
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
-        GetScenes();
+  
     }
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.F1)){
+            SetSettingType(0);
+        } else if (Input.GetKeyDown(KeyCode.F2))
+        {
+            SetSettingType(1);
+        }
+        else if (Input.GetKeyDown(KeyCode.F3))
+        {
+            SetSettingType(2);
+        }
+    }
+    void LoadBg()
+    {
+        for (int i=0;i<scenes.Length;i++)
+        {
+            LoadBg(i);
+        }
+        
+    }
+    void LoadBg(int i)
+    {
+        Size screenSize = new Size(1920, 1080);
+        SpriteRenderer bg = scenes[i].GetComponent<SpriteRenderer>();
+        bg.sprite = GetSprite(bgPaths[i], screenSize);
+        Debug.Log($"=加载场景{i}");
     }
     void GetSettingType()
     {
         int sceneIdx=net.GetSettingType();
-        scenes[sceneIdx].SetActive(true);
-        objectType = (ObjectType)sceneIdx;
+        if(sceneIdx>0)
+        SetScene(sceneIdx);
     }
-    bool SetSettingType()
+    void SetSettingType(int i)
     {
-
+        bool result = net.SetSettingType(i);
+        if(result)
+        {
+            SetScene(i);
+        }
+        Debug.Log($"=发送设置场景请求  {result}");
+    }
+    void SetScene(int idx)
+    {
+        for (int i = 0; i < scenes.Length; i++)
+        {
+            scenes[i].SetActive(i==idx);
+        }
+        objectType = (ObjectType)idx;
+        Debug.Log($"=设置场景#{idx}");
     }
 
 
@@ -87,7 +141,6 @@ public class GameController : MonoBehaviour
         byte[] buffer = new byte[fs.Length];
         fs.Read(buffer, 0, (int)fs.Length);
         Texture2D texture = new Texture2D(size.Width, size.Height);
-        Debug.Log(texture.width + " " + texture.height);
         texture.LoadImage(buffer);
         Sprite result = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
 

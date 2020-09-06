@@ -14,8 +14,10 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://zf.cracre.vip:81/API/";
+    //string serverUrlBase = "http://zf.cracre.vip:81/API/";
+    string serverUrlBase = "http://localhost:5000/API/";
     HttpClient client=new HttpClient();
+    public bool isReceive = false;
 
     float count=0;
     void Start()
@@ -36,7 +38,7 @@ public class Net : MonoBehaviour
         //    SendEcho();
         //    Debug.Log(Time.time);
         //}
-        if (count <= 0)
+        if (isReceive&& count <= 0)
         {
             count = timeRate;
             ReceiveMsg();
@@ -100,6 +102,7 @@ public class Net : MonoBehaviour
         string urlSetMsgReaded= serverUrlBase + "setmsgreaded";
         //HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
         JObject jGetMsgPara = new JObject();
+
         string result = await PostAsync(urlGetMsg, jGetMsgPara.ToString());
         JArray json = JArray.Parse(result);
         if (json == null)
@@ -125,7 +128,9 @@ public class Net : MonoBehaviour
     }
     public async Task<string> PostAsync(string url,string jParameters)
     {
-        StringContent content =new StringContent(jParameters);
+        if (jParameters == null)
+            jParameters = "{}";
+        StringContent content = new StringContent(jParameters);
         content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
         HttpResponseMessage response = await client.PostAsync(url, content);
         string sResult = response.Content.ReadAsStringAsync().Result;
@@ -135,7 +140,10 @@ public class Net : MonoBehaviour
     {
         string url =$"{serverUrlBase}GetSettingType";
         string result = PostAsync(url, null).Result;
-        return int.Parse(result);
+        int idx = -1;
+        if (result != null)
+            int.TryParse(result, out idx);
+        return idx;
     }
     public bool SetSettingType(int i)
     {

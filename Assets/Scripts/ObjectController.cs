@@ -63,8 +63,8 @@ public class ObjectController : MonoBehaviour
     {
         switch (type)
         {
-            case ObjectType.Firework:CreateFireworks(index);break;
-            case ObjectType.Light:CreateLight(index);break;
+            case ObjectType.firework:CreateFireworks(index);break;
+            case ObjectType.light:CreateLight(index);break;
         }
     }
     public void Create(int index, ObjectType type,string text)
