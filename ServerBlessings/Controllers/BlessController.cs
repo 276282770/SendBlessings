@@ -60,10 +60,15 @@ namespace Web.Controller
             return json;
         }
         [HttpPost("GetMsg")]
-        public JArray GetMsg()
+        public JArray GetMsg(JObject jTpIdx)
         {
             JArray result = new JArray();
-            DataTable dt= Handle.GetMsg();
+            int tpIdx = -1;
+            if (jTpIdx != null && jTpIdx["TPIDX"] != null)
+            {
+                tpIdx = (int)jTpIdx["TPIDX"];
+            }
+            DataTable dt= Handle.GetMsg(tpIdx);
             foreach (DataRow row in dt.Rows)
             {
                 JObject item = new JObject();

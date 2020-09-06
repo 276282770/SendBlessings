@@ -8,6 +8,7 @@ using Codu.Data.DataBase;
 using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Web
 {
@@ -68,12 +69,17 @@ namespace Web
             bool result = SqlHelper.ExecuteNonQuery(sql, pars);
             return result;
         }
-        public static DataTable GetMsg()
+        public static DataTable GetMsg(int tpIdx)
         {
             DateTime dt = default;
-            string sql = @"SELECT C.ID, U.Nickname,C.Message,C.ObjectIndex,C.ObjectType FROM CONTENT C
+            string[] typeStrings = { "light","firework","tree"};
+            string sql = @"SELECT C.ID, U.Nickname,U.Headimgurl,C.Message,C.ObjectIndex,C.ObjectType FROM CONTENT C
 LEFT JOIN [Users] U ON C.UserID=U.ID
-WHERE ISSHOWED=0";
+WHERE ISSHOWED=0 ";
+            if (tpIdx > 0)
+            {
+                sql += $"AND C.OBJECTTYPE={typeStrings[tpIdx]}";
+            }
             DataTable result = SqlHelper.ExecuteSql(sql);
             return result;
         }
