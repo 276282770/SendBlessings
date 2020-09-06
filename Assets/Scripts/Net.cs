@@ -131,4 +131,18 @@ public class Net : MonoBehaviour
         string sResult = response.Content.ReadAsStringAsync().Result;
         return sResult;
     }
+    public int GetSettingType()
+    {
+        string url =$"{serverUrlBase}GetSettingType";
+        string result = PostAsync(url, null).Result;
+        return int.Parse(result);
+    }
+    public bool SetSettingType(int i)
+    {
+        string url = $"{serverUrlBase}SetSettingType";
+        JObject jData = new JObject();
+        jData["index"] = i;
+        bool result = bool.Parse(PostAsync(url, jData.ToString(Newtonsoft.Json.Formatting.None)).Result);
+        return result;
+    }
 }

@@ -62,6 +62,7 @@
      <Compile Include="Assets\Scripts\Message.cs" />
      <Compile Include="Assets\Scripts\MessageController.cs" />
      <Compile Include="Assets\Scripts\Light.cs" />
+     <Compile Include="Assets\Scripts\GameController.cs" />
  <Reference Include="Unity.Timeline.Editor">
  <HintPath>D:/Projects/Chen/SendBlessings/ScreenBlessings/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
  </Reference>
