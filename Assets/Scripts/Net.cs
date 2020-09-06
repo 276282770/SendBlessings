@@ -16,7 +16,7 @@ public class Net : MonoBehaviour
     int point;
     //string serverUrlBase = "http://zf.cracre.vip:81/API/";
     string serverUrlBase = "http://localhost:5000/API/";
-    HttpClient client=new HttpClient();
+    HttpClient client = new HttpClient();
     public bool isReceive = false;
 
     float count=0;
@@ -27,7 +27,7 @@ public class Net : MonoBehaviour
         //ReadIPEndPoint();
         //Debug.Log(ip+" "+point);
         //SendEcho();
- 
+        
     }
 
     // Update is called once per frame
@@ -102,7 +102,7 @@ public class Net : MonoBehaviour
         string urlSetMsgReaded= serverUrlBase + "setmsgreaded";
         //HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
         JObject jGetMsgPara = new JObject();
-
+        jGetMsgPara["TPIDX"] = (int)GameController.Instance.objectType;
         string result = await PostAsync(urlGetMsg, jGetMsgPara.ToString());
         JArray json = JArray.Parse(result);
         if (json == null)
@@ -128,8 +128,9 @@ public class Net : MonoBehaviour
     }
     public async Task<string> PostAsync(string url,string jParameters)
     {
+        
         if (jParameters == null)
-            jParameters = "{}";
+            jParameters = new JObject().ToString();
         StringContent content = new StringContent(jParameters);
         content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
         HttpResponseMessage response = await client.PostAsync(url, content);
@@ -138,19 +139,38 @@ public class Net : MonoBehaviour
     }
     public int GetSettingType()
     {
-        string url =$"{serverUrlBase}GetSettingType";
-        string result = PostAsync(url, null).Result;
+        string url =serverUrlBase+"GetSettingType";
+        StringContent content = new StringContent("{}");
+        content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        HttpResponseMessage response= client.PostAsync(url, content).Result;
+        string result = response.Content.ReadAsStringAsync().Result;
+        //string result =await PostAsync(url, null);
+
         int idx = -1;
         if (result != null)
-            int.TryParse(result, out idx);
+        {
+            JObject jRet = JObject.Parse(result);
+            int.TryParse((string)jRet["Data"], out idx);
+        }
         return idx;
     }
+
     public bool SetSettingType(int i)
     {
         string url = $"{serverUrlBase}SetSettingType";
         JObject jData = new JObject();
         jData["index"] = i;
-        bool result = bool.Parse(PostAsync(url, jData.ToString(Newtonsoft.Json.Formatting.None)).Result);
+        StringContent content = GetContent(jData.ToString());
+        HttpResponseMessage response= client.PostAsync(url, content).Result;
+        string resultString = response.Content.ReadAsStringAsync().Result;
+        JObject jRet = JObject.Parse(resultString);
+        bool result =  (bool)jRet["Result"];
         return result;
+    }
+    StringContent GetContent(string json)
+    {
+        StringContent content = new StringContent(json);
+        content.Headers.ContentType= new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+        return content;
     }
 }

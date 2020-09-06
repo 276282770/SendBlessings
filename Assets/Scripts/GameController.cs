@@ -65,8 +65,9 @@ public class GameController : MonoBehaviour
     void GetSettingType()
     {
         int sceneIdx=net.GetSettingType();
-        if(sceneIdx>0)
+        if(sceneIdx!=-1)
         SetScene(sceneIdx);
+        net.isReceive = true;
     }
     void SetSettingType(int i)
     {

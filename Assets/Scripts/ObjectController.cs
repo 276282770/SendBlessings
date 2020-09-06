@@ -8,6 +8,7 @@ public class ObjectController : MonoBehaviour
     public Firework[] preFireworks;
     public Light[] preLights;
     public GameObject tree;
+    public Transform[] parents;
     public int margin = 100;
     public static ObjectController Instance;
     // Start is called before the first frame update
@@ -42,6 +43,7 @@ public class ObjectController : MonoBehaviour
         float top = Random.Range(0, orthSize - 1);
         float scale = Random.Range(0.3f,1f);
         Firework fireworks= Instantiate(preFireworks[index], new Vector3(x, top), Quaternion.identity);
+        fireworks.transform.parent = parents[1];
         fireworks.transform.localScale = new Vector3(scale,scale,1);
     }
     public void CreateLight(int index)
@@ -51,7 +53,12 @@ public class ObjectController : MonoBehaviour
         float y = -(orthSize + 0.5f);
         float scale = Random.Range(0.2f, 0.5f);
         Light light = Instantiate(preLights[index], new Vector3(x, y), Quaternion.identity);
+        light.transform.parent = parents[0];
         light.transform.localScale = new Vector3(scale, scale, 1);
+    }
+    private void CreateTree()
+    {
+        throw new System.NotImplementedException();
     }
     float RandomX()
     {
@@ -65,8 +72,12 @@ public class ObjectController : MonoBehaviour
         {
             case ObjectType.firework:CreateFireworks(index);break;
             case ObjectType.light:CreateLight(index);break;
+            case ObjectType.tree:CreateTree();break;
         }
     }
+
+
+
     public void Create(int index, ObjectType type,string text)
     {
         Create(index, type);
