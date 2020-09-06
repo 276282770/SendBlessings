@@ -78,7 +78,7 @@ LEFT JOIN [Users] U ON C.UserID=U.ID
 WHERE ISSHOWED=0 ";
             if (tpIdx > 0)
             {
-                sql += $"AND C.OBJECTTYPE={typeStrings[tpIdx]}";
+                sql += $"AND C.OBJECTTYPE='{typeStrings[tpIdx]}'";
             }
             DataTable result = SqlHelper.ExecuteSql(sql);
             return result;

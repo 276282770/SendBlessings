@@ -76,6 +76,7 @@ namespace Web.Controller
                 item["Nickname"] = (string)row["Nickname"];
                 item["Message"] = (string)row["Message"];
                 //item["CreateTime"] = (DateTime)row["CreateTime"];
+                item["Headimgurl"] = (string)row["Headimgurl"];
                 item["ObjectIndex"] = (int)row["ObjectIndex"];
                 item["ObjectType"] = (string)row["ObjectType"];
                 result.Add(item);
