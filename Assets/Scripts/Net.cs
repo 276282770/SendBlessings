@@ -15,13 +15,13 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    //string serverUrlBase = "http://zf.cracre.vip:81/API/";
-    string serverUrlBase = "http://localhost:5000/API/";
+    string serverUrlBase = "http://zf.cracre.vip:81/API/";
+    //string serverUrlBase = "http://localhost:5000/API/";
     HttpClient client = new HttpClient();
     public bool isReceive = false;
 
     float count=0;
-    List<int> playedIds = new List<long>();
+    List<int> playedIds = new List<int>();
     void Start()
     {
         //if (udpClient == null)

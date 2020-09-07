@@ -22,12 +22,12 @@ public class ObjectController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            int idx = Random.Range(0, 10);
+            int idx = Random.Range(0, 9);
             CreateFireworks(idx);
         }
         if(Input.GetMouseButtonDown(1))
         {
-            int idx = Random.Range(0, 10);
+            int idx = Random.Range(0, 9);
             CreateLight(idx);
         }
         if(Input.GetMouseButtonDown(2))
