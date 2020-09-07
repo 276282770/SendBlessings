@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
-using UnityEditor.iOS;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
@@ -39,11 +38,33 @@ public class Message : MonoBehaviour
     }
     public void SetMessage(string msg,string headImgUrl)
     {
+        
        GetComponent<Text>().text = msg;
-        HttpClient client = new HttpClient();
-       HttpResponseMessage response= client.GetAsync(headImgUrl).Result;
-        byte[] buffer = response.Content.ReadAsByteArrayAsync().Result;
-        UnityWebRequestTexture
-        image.sprite = ;
+       // HttpClient client = new HttpClient();
+       //HttpResponseMessage response= client.GetAsync(headImgUrl).Result;
+       // byte[] buffer = response.Content.ReadAsByteArrayAsync().Result;
+       // UnityWebRequest www = UnityWebRequestTexture.GetTexture(headImgUrl);
+       // Texture2D texture =DownloadHandlerTexture.GetContent(www);
+
+        StartCoroutine("GetText", headImgUrl);
+        
+    }
+    IEnumerator GetText(string imgUrl)
+    {
+        using (UnityWebRequest uwr = UnityWebRequestTexture.GetTexture(imgUrl))
+        {
+            yield return uwr.SendWebRequest();
+
+            if (uwr.isNetworkError || uwr.isHttpError)
+            {
+                Debug.Log(uwr.error);
+            }
+            else
+            {
+                // Get downloaded asset bundle
+                var texture = DownloadHandlerTexture.GetContent(uwr);
+                image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
+            }
+        }
     }
 }

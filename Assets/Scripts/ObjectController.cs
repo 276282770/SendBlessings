@@ -7,7 +7,7 @@ public class ObjectController : MonoBehaviour
 {
     public Firework[] preFireworks;
     public Light[] preLights;
-    public GameObject tree;
+    public GameObject preFu;
     public Transform[] parents;
     public int margin = 100;
     public static ObjectController Instance;
@@ -29,6 +29,10 @@ public class ObjectController : MonoBehaviour
         {
             int idx = Random.Range(0, 10);
             CreateLight(idx);
+        }
+        if(Input.GetMouseButtonDown(2))
+        {
+            CreateTree();
         }
         
     }
@@ -58,7 +62,9 @@ public class ObjectController : MonoBehaviour
     }
     private void CreateTree()
     {
-        throw new System.NotImplementedException();
+        float x = Random.Range(-3.25f, 3.25f);
+        float y = Random.Range(-3.52f, 2.17f);
+        Instantiate(preFu, new Vector3(x, y, 0), Quaternion.identity, parents[2].GetChild(0));
     }
     float RandomX()
     {
@@ -78,9 +84,9 @@ public class ObjectController : MonoBehaviour
 
 
 
-    public void Create(int index, ObjectType type,string text)
+    public void Create(int index, ObjectType type,string text,string imgUrl)
     {
         Create(index, type);
-        MessageController.Instance.CreateText(text);
+        MessageController.Instance.CreateText(text,imgUrl);
     }
 }

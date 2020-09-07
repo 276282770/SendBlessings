@@ -1,6 +1,7 @@
 ﻿using ClientController;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
@@ -20,6 +21,7 @@ public class Net : MonoBehaviour
     public bool isReceive = false;
 
     float count=0;
+    List<int> playedIds = new List<long>();
     void Start()
     {
         //if (udpClient == null)
@@ -112,17 +114,27 @@ public class Net : MonoBehaviour
         Debug.Log($"[{DateTime.Now}]接收到{json.Count}条消息.");
         for (int i = 0; i < json.Count; i++)
         {
+            int id = (int)json[i]["ID"];
+            foreach(int pid in playedIds)
+            {
+                if (id == pid)
+                    return;
+            }
+
+
             ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
             int index = (int)json[i]["ObjectIndex"];
             string text = $"【{json[i]["Nickname"]}】{json[i]["Message"]}";
-            ObjectController.Instance.Create(index, type,text);
-            Debug.Log($"[{DateTime.Now}]播放#{json[i]["ID"]}消息");
+            string imgUrl = (string)json[i]["Headimgurl"];
+            ObjectController.Instance.Create(index, type,text,imgUrl);
+            
+            Debug.Log($"[{DateTime.Now}]播放#{id}消息");
 
             JObject jSetMsgReaded = new JObject();
             jSetMsgReaded["ID"] = json[i]["ID"];
             string retSetMsgReaded= await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
             Debug.Log(retSetMsgReaded);
-           
+            playedIds.Add(id);
         }
         
     }
