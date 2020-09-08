@@ -7,10 +7,12 @@ public class ObjectController : MonoBehaviour
 {
     public Firework[] preFireworks;
     public Light[] preLights;
-    public GameObject preFu;
+    public GameObject[] preFus;
     public Transform[] parents;
     public int margin = 100;
     public static ObjectController Instance;
+
+    float z = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,7 +34,8 @@ public class ObjectController : MonoBehaviour
         }
         if(Input.GetMouseButtonDown(2))
         {
-            CreateTree();
+            int idx = Random.Range(0, preFus.Length);
+            CreateTree(idx);
         }
         
     }
@@ -60,11 +63,17 @@ public class ObjectController : MonoBehaviour
         light.transform.parent = parents[0];
         light.transform.localScale = new Vector3(scale, scale, 1);
     }
-    private void CreateTree()
+    private void CreateTree(int index)
     {
-        float x = Random.Range(-3.25f, 3.25f);
-        float y = Random.Range(-3.52f, 2.17f);
-        Instantiate(preFu, new Vector3(x, y, 0), Quaternion.identity, parents[2].GetChild(0));
+        float x, y, distance;
+        do
+        {
+            x = Random.Range(-3.25f, 3.25f);
+            y = Random.Range(-3.52f, 2.17f);
+            distance = Mathf.Sqrt(x * x + y * y);
+        } while (distance > 3.367);
+        Instantiate(preFus[index], new Vector3(x, y, z), Quaternion.identity, parents[2].GetChild(0));
+        z -= 0.001f;
     }
     float RandomX()
     {
@@ -78,7 +87,7 @@ public class ObjectController : MonoBehaviour
         {
             case ObjectType.firework:CreateFireworks(index);break;
             case ObjectType.light:CreateLight(index);break;
-            case ObjectType.tree:CreateTree();break;
+            case ObjectType.tree:CreateTree(index);break;
         }
     }
 

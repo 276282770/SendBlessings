@@ -4,13 +4,20 @@ using UnityEngine;
 
 public class Fu : MonoBehaviour
 {
-    public Animator anim;
+
+    public float lift = 60;
 
 
-
-    void OnEnable()
+    private void Update()
     {
-        anim.Play("fu_fadeIn");
+        if (lift <= 0)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            lift -= Time.deltaTime;
+        }
     }
 
 }
