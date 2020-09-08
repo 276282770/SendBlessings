@@ -16,7 +16,7 @@
 
             3000
         )
-        oriP3ObjMt = removePX($("#dvP3Obj").css("margin-top"));
+        oriP3ObjMt = removePX($("#dvP3Obj").css("top"));
         $("#btnFlush").click(function () { window.location.reload(); });
         //$("#dvP3Obj").mousedown(p3ObjDown);
         //$(document).mousemove(p3ObjMove);
@@ -24,6 +24,9 @@
         $("#dvP3Obj").on("touchstart", p3ObjDown);
         $("#dvP3Obj").on("touchmove", p3ObjMove);
         $("#dvP3Obj").on("touchend", p3ObjUp);
+        $("#dvP3Obj2").on("touchstart", p3ObjDown);
+        $("#dvP3Obj2").on("touchmove", p3ObjMove);
+        $("#dvP3Obj2").on("touchend", p3ObjUp);
         //$("#dvP3Obj").on("touchend", function (e) { e.offsetY });
     }
     
@@ -121,7 +124,7 @@ function onShowP1() {
     $(".p3").hide();
     $("#mainContent").show();
     $("#txtMsg").val("");
-    $("#dvP3Obj").css({ "margin-top": oriP3ObjMt + "px" });
+    $("#dvP3Obj").css({ "top": oriP3ObjMt + "px" });
 }
 function onShowP2(idx, tp) {
     index = idx;
@@ -130,7 +133,7 @@ function onShowP2(idx, tp) {
     switch (tp) {
         case "light": imgSrc = "images/deng" + (idx + 1) + ".png"; break;
         case "firework": imgSrc = "images/yanhua" + (idx + 1) + ".png"; break;
-        case "tree": imgSrc = "images/shu2.png"; break;
+        case "tree": imgSrc = "images/f"+(idx+1)+".png"; break;
     }
     $("#imgP2Obj").attr("src", imgSrc);
     $(".p2").slideDown();
@@ -144,6 +147,7 @@ function onShowP3() {
     $(".p2").hide();
     $(".b2").hide();
     $(".b1").show();
+    $("#dvP3Obj2").show();
     $("#mainContent").hide();
 }
 function p3ObjMove(e) {
@@ -156,7 +160,7 @@ function p3ObjMove(e) {
     if (offY > 0)
         return;
     console.log((oriP3ObjMt + offY) + "px");
-    $("#dvP3Obj").css({ "margin-top": (oriP3ObjMt + offY)+"px" });
+    $("#dvP3Obj").css({ "top": (oriP3ObjMt + offY)+"px" });
     //console.log(currY+" "+ currY - oriY);
 }
 function p3ObjDown(e) {
@@ -170,16 +174,21 @@ function p3ObjDown(e) {
 function p3ObjUp(e) {
     console.log("松开");
     isP3ObjDown = false;
-    let mt = removePX($("#dvP3Obj").css("margin-top"));
+    let mt = removePX($("#dvP3Obj").css("top"));
     console.log("Top:" + mt);
     if (mt > -100) {
-        $("#dvP3Obj").css({ "margin-top": oriP3ObjMt+"px" });
+        $("#dvP3Obj").css({ "top": oriP3ObjMt+"px" });
         return;
     }
+    $("#dvP3Obj2").hide();
+    $("#dvP3Obj").animate({ "top": "-1500px" }, "fast", function () { 
+
+    
     send();
-    alert("恭喜，您的祝福已发送");
+    //alert("恭喜，您的祝福已发送");
     //window.location.reload();
-    onShowP1();
+        onShowP1();
+    });
 }
 function removePX(oriStr) {
     return parseInt( oriStr.substr(0, oriStr.length - 2));
@@ -217,4 +226,13 @@ function getUrlParam(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
     var r = window.location.search.substr(1).match(reg);  //匹配目标参数
     if (r != null) return unescape(r[2]); return null; //返回参数值
+}
+function aa() {
+    console.log("55665");
+    $("#dvP3Obj").animate({ "top": "-1500px" }, "fast", function () { console.log("aaa") });;
+    console.log("7766");
+    //console.log($("#dvP30bj").attr("style"));
+    
+    //$("#dvP30bj").animate({ "top": "-1500px" }, "fast", function () { console.log("aaa") });
+    //$("#dvP30bj").animate({ "top": '-500px' });
 }

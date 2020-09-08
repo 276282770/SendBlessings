@@ -22,7 +22,7 @@
                 </ul>
             </div>
             <div id="mainContent" style="">
-                <div class="ctnt" id="ctntLight">
+                <div class="ctnt " id="ctntLight" >
                     <div class="cRow">
                         <div onclick="onShowP2(0,'light')"><img src="images/deng1.png" /></div>
                         <div onclick="onShowP2(1,'light')"><img src="images/deng2.png" /></div>
@@ -56,8 +56,24 @@
                         <div onclick="onShowP2(8,'firework')"><img src="images/yanhua9.png" /></div>
                     </div>
                 </div>
-                <div class="ctnt" id="ctntTree" style="display:none;">
-                    <img src="images/shu2.png" style="width:100%;" onclick="onShowP2(8,'tree')" />
+                <div class="ctnt hd" id="ctntTree" style="position: relative; ">
+                    <img src="images/shu.png" style="width:100%;" />
+                    <div onclick="onShowP2(0,'tree')" style=" position: absolute; top: 30px; left: 250px; "><img src="images/f1.png" /></div>
+                    <div onclick="onShowP2(1,'tree')" style=" position: absolute; top: 150px; left: 150px; "><img src="images/f2.png" /></div>
+                    <div onclick="onShowP2(2,'tree')" style=" position: absolute; top: 300px; "><img src="images/f03.png" /></div>
+                    <div onclick="onShowP2(3,'tree')" style=" position: absolute; top: 320px; left: 230px; "><img src="images/f4.png" /></div>
+                    <div onclick="onShowP2(4,'tree')" style=" position: absolute; top: 250px; left: 400px; "><img src="images/f5.png" /></div>
+                    <div onclick="onShowP2(5,'tree')" style=" position: absolute; top: 400px; left: 330px; "><img src="images/f6.png" /></div>
+                    <div onclick="onShowP2(6,'tree')" style=" position: absolute; top: 540px; left: 100px; "><img src="images/f7.png" /></div>
+                    <div onclick="onShowP2(7,'tree')" style=" position: absolute; top: 650px; left: 300px; "><img src="images/f8.png" /></div>
+                    <div onclick="onShowP2(8,'tree')" style=" position: absolute; top: 40px; right: 250px; "><img src="images/f9.png" /></div>
+                    <div onclick="onShowP2(9,'tree')" style=" position: absolute; top: 150px; right: 150px; "><img src="images/f10.png" /></div>
+                    <div onclick="onShowP2(10,'tree')" style=" position: absolute; top: 300px; right: 0px; "><img src="images/f11.png" /></div>
+                    <div onclick="onShowP2(11,'tree')" style=" position: absolute; top: 400px; right: 170px; "><img src="images/f12.png" /></div>
+                    <div onclick="onShowP2(12,'tree')" style=" position: absolute; top: 450px; right: 250px; "><img src="images/f13.png" /></div>
+                    <div onclick="onShowP2(13,'tree')" style=" position: absolute; top: 480px; right: 90px; "><img src="images/f14.png" /></div>
+                    <div onclick="onShowP2(14,'tree')" style=" position: absolute; top: 600px; right: 30px; "><img src="images/f15.png" /></div>
+                    <div onclick="onShowP2(15,'tree')" style=" position: absolute; top: 700px; right: 250px; "><img src="images/f16.png" /></div>
                 </div>
             </div>
             <!-- 左右箭头
@@ -73,7 +89,7 @@
                     <div style=" background: url(images/zhanshikuang.png) no-repeat; width: 752px; height: 952px;margin-top:300px;">
                         <div style="height: 70px; font-size: 50px; color: #ffff; text-align: center; padding: 15px;">烟花</div>
                         <div style="padding: 70px 10px 130px 10px;display: flex; align-items: center; justify-content: center; height: 650px;">
-                            <img src="images/deng7.png" style="width: 350px;" id="imgP2Obj" />
+                            <img src="images/deng7.png" style="height:550px;" id="imgP2Obj" />
                         </div>
                     </div>
                     <div style="background: url(images/shurukuang.png) no-repeat; background-size: 100% 100%; margin-top: 30px; height: 350px;">
@@ -82,10 +98,10 @@
                 </div>
             </div>
             <div class="p3" style="display:none;">
-                <div style="margin-top:300px;">
-                    <img src="images/jiantou.gif" />
+                <div style="margin-top:500px;" >
+                    <img src="images/jiantou.gif" id="dvP3Obj2" />
                 </div>
-                <div style="margin-top:200px;" id="dvP3Obj">
+                <div style="top:150px;position:relative" id="dvP3Obj">
                     <img id="imgP3Obj" src="images/deng1.png" style="width:300px;" />
                 </div>
             </div>
