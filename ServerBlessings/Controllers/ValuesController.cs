@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Web;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -42,6 +44,11 @@ namespace ServerBlessings
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+        [HttpGet("filter/{wd}")]
+        public string GetPath(string wd)
+        {
+            return Web.Handle.FilterWord(wd); ;
         }
     }
 }

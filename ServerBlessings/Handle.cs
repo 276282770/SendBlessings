@@ -9,6 +9,8 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Text;
+using System.IO;
 
 namespace Web
 {
@@ -32,6 +34,7 @@ namespace Web
         }
         public static bool AddMsg(string msg,int userId,string objType,int objIdx)
         {
+            msg = FilterWord(msg);
             string sql = "INSERT Content(UserID,Message,ObjectIndex,ObjectType) VALUES(@USERID,@Message,@ObjectIndex,@ObjectType)";
             Dictionary<string, object> pars = new Dictionary<string, object>();
             pars.Add("@USERID",userId);
@@ -96,6 +99,29 @@ WHERE ISSHOWED=0 ";
             string sql = $"update setting set setvalue={i} where setname='Type'";
             bool result = SqlHelper.ExecuteNonQuery(sql);
             return result;
+        }
+        public static string FilterWord(string txt)
+        {
+            string fileName = $@"{System.Environment.CurrentDirectory}\wwwroot\zidingyi.txt";
+            FileInfo fi = new FileInfo(fileName);
+            using (StreamReader sr=new StreamReader(fi.OpenRead()))
+            {
+                string word = sr.ReadLine();
+                while (null!=word)
+                {
+                    if(word!="")
+                    if (txt.Contains(word))
+                    {
+                        txt = txt.Replace(word, "*");
+                    }
+                    word = sr.ReadLine();
+                }
+            }
+            return txt;
+        }
+        public static string GetPath()
+        {
+            return System.Environment.CurrentDirectory;
         }
     }
 }

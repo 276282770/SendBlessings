@@ -116,5 +116,6 @@ namespace Web.Controller
             jRet["Result"] = Handle.SetType((int)jDataIn["index"]);
             return jRet;
         }
+        
     }
 }
