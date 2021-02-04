@@ -18,7 +18,7 @@ public class MessageController : MonoBehaviour
     public void CreateText(string text,string imgUrl)
     {
         int y = maxY;
-        for (int j = maxY; j > maxY-100*3; j-=100)
+        for (int j = maxY; j > maxY-80*3; j-=80)
         {
             bool match = false;
             for (int i = 0; i < transform.childCount; i++)
