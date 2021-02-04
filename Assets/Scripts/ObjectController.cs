@@ -24,8 +24,9 @@ public class ObjectController : MonoBehaviour
     {
         if(Input.GetMouseButtonDown(0))
         {
-            int idx = Random.Range(0, 9);
-            CreateFireworks(idx);
+            //int idx = Random.Range(0, 9);
+            //CreateFireworks(idx);
+            MessageController.Instance.CreateText("123123", "");
         }
         if(Input.GetMouseButtonDown(1))
         {
@@ -37,6 +38,7 @@ public class ObjectController : MonoBehaviour
             int idx = Random.Range(0, preFus.Length);
             CreateTree(idx);
         }
+
         
     }
     /// <summary>

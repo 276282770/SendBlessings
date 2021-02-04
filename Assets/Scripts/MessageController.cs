@@ -7,6 +7,7 @@ public class MessageController : MonoBehaviour
 {
     public Message preText;
     public static MessageController Instance;
+    public int lineCount = 5;
 
     const int maxY = 1000;
     const int maxX = 2880;
@@ -18,7 +19,7 @@ public class MessageController : MonoBehaviour
     public void CreateText(string text,string imgUrl)
     {
         int y = maxY;
-        for (int j = maxY; j > maxY-80*3; j-=80)
+        for (int j = maxY; j > maxY-80*lineCount; j-=80)
         {
             bool match = false;
             for (int i = 0; i < transform.childCount; i++)
