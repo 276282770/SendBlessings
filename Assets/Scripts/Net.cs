@@ -101,41 +101,53 @@ public class Net : MonoBehaviour
     }
     public async void ReceiveMsg()
     {
-        string urlGetMsg =serverUrlBase+ "GetMsg";
-        string urlSetMsgReaded= serverUrlBase + "setmsgreaded";
-        //HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
-        JObject jGetMsgPara = new JObject();
-        jGetMsgPara["TPIDX"] = (int)GameController.Instance.objectType;
-        string result = await PostAsync(urlGetMsg, jGetMsgPara.ToString());
-        JArray json = JArray.Parse(result);
-        if (json == null)
-            return;
-        if (json.Count == 0)
-            return;
-        Debug.Log($"[{DateTime.Now}]接收到{json.Count}条消息.");
-        for (int i = 0; i < json.Count; i++)
+        isReceive = false;
+        try
         {
-            int id = (int)json[i]["ID"];
-            foreach(int pid in playedIds)
+            string urlGetMsg = serverUrlBase + "GetMsg";
+            string urlSetMsgReaded = serverUrlBase + "setmsgreaded";
+            //HttpResponseMessage response=await client.PostAsync(urlGetMsg, null);
+            JObject jGetMsgPara = new JObject();
+            jGetMsgPara["TPIDX"] = (int)GameController.Instance.objectType;
+            string result = await PostAsync(urlGetMsg, jGetMsgPara.ToString());
+            JArray json = JArray.Parse(result);
+            if (json == null)
+                return;
+            if (json.Count == 0)
+                return;
+            Debug.Log($"[{DateTime.Now}]接收到{json.Count}条消息.");
+            for (int i = 0; i < json.Count; i++)
             {
-                if (id == pid)
-                    return;
+                int id = (int)json[i]["ID"];
+                foreach (int pid in playedIds)
+                {
+                    if (id == pid)
+                        return;
+                }
+
+
+                ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
+                int index = (int)json[i]["ObjectIndex"];
+                string text = $"【{json[i]["Nickname"]}】{json[i]["Message"]}";
+                string imgUrl = (string)json[i]["Headimgurl"];
+                ObjectController.Instance.Create(index, type, text, imgUrl);
+
+                Debug.Log($"[{DateTime.Now}]播放#{id}消息");
+
+                JObject jSetMsgReaded = new JObject();
+                jSetMsgReaded["ID"] = json[i]["ID"];
+                string retSetMsgReaded = await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
+                Debug.Log(retSetMsgReaded);
+                playedIds.Add(id);
             }
-
-
-            ObjectType type = (ObjectType)Enum.Parse(typeof(ObjectType), (string)json[i]["ObjectType"]);
-            int index = (int)json[i]["ObjectIndex"];
-            string text = $"【{json[i]["Nickname"]}】{json[i]["Message"]}";
-            string imgUrl = (string)json[i]["Headimgurl"];
-            ObjectController.Instance.Create(index, type,text,imgUrl);
-            
-            Debug.Log($"[{DateTime.Now}]播放#{id}消息");
-
-            JObject jSetMsgReaded = new JObject();
-            jSetMsgReaded["ID"] = json[i]["ID"];
-            string retSetMsgReaded= await PostAsync(urlSetMsgReaded, jSetMsgReaded.ToString());
-            Debug.Log(retSetMsgReaded);
-            playedIds.Add(id);
+        }
+        catch(Exception ex)
+        {
+            Debug.Log("出错："+ex.Message);
+        }
+        finally
+        {
+            isReceive = true;
         }
         
     }

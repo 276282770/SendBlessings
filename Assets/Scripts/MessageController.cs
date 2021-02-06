@@ -9,8 +9,11 @@ public class MessageController : MonoBehaviour
     public static MessageController Instance;
     public int lineCount = 5;
 
-    const int maxY = 1000;
-    const int maxX = 2880;
+    int maxY = 850;
+    //const int maxX = 2880;
+    int maxX = 2500;
+
+
 
     int lastLine = 0;
     float time = 5;
@@ -18,6 +21,8 @@ public class MessageController : MonoBehaviour
     void Start()
     {
         Instance = this;
+        maxY = Screen.height-50;
+        maxX = Screen.width+900;
     }
     private void Update()
     {

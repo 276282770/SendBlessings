@@ -11,6 +11,7 @@ public class Message : MonoBehaviour
     
     RectTransform rectTransform;
     Image image;
+    int x = -960;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -25,7 +26,7 @@ public class Message : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x>= -960)
+        if (transform.position.x>= x)
         {
             transform.Translate(Vector3.left);
         }

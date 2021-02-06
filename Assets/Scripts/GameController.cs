@@ -49,17 +49,30 @@ public class GameController : MonoBehaviour
     }
     void LoadBg()
     {
+        float cameraHeight= Camera.main.orthographicSize * 2;
+        float cameraWidth = Camera.main.aspect * cameraHeight;
+        
         for (int i=0;i<scenes.Length;i++)
         {
             LoadBg(i);
+            //调整背景大小
+            //Vector3 scale=scenes[i]
         }
         
     }
+    
     void LoadBg(int i)
     {
+        float cameraHeight = Camera.main.orthographicSize * 2;
+        float cameraWidth = Camera.main.aspect * cameraHeight;
         Size screenSize = new Size(1920, 1080);
         SpriteRenderer bg = scenes[i].GetComponent<SpriteRenderer>();
         bg.sprite = GetSprite(bgPaths[i], screenSize);
+        Vector3 scale = scenes[i].transform.localScale;
+        scale.y *= cameraHeight / screenSize.Height*100;
+        scale.x *= cameraWidth / screenSize.Width*100;
+        scenes[i].transform.localScale = scale;
+
         Debug.Log($"=加载场景{i}");
     }
     void GetSettingType()
