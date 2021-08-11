@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using Models;
 
 public class Net : MonoBehaviour
 {
@@ -15,14 +16,19 @@ public class Net : MonoBehaviour
     Udp udpClient;
     string ip;
     int point;
-    string serverUrlBase = "http://zf.cyhdzy.com:81/API/";
-    //string serverUrlBase = "http://zf.cracre.vip:81/API/";
+    //string serverUrlBase = "http://zf.cyhdzy.com:81/API/";
+    string serverUrlBase = "http://zf.cracre.vip:81/API/";
     //string serverUrlBase = "http://localhost:5000/API/";
     HttpClient client = new HttpClient();
     public bool isReceive = false;
 
     float count=0;
     List<int> playedIds = new List<int>();
+
+
+    List<MessageModel> recordMsgs = new List<MessageModel>();//记录消息，最大1000条
+    float msgFreeTime = 0;   //空闲时间
+
     void Start()
     {
         //if (udpClient == null)
@@ -50,7 +56,17 @@ public class Net : MonoBehaviour
         {
             count -= Time.deltaTime;
         }
+        if(msgFreeTime>120)
+        {
+            PlayRecordMsg();
+            msgFreeTime = 0;
+        }
+        else
+        {
+            msgFreeTime += Time.deltaTime;
+        }
     }
+
     private void OnDestroy()
     {
         if(udpClient!=null)
@@ -130,6 +146,13 @@ public class Net : MonoBehaviour
                 int index = (int)json[i]["ObjectIndex"];
                 string text = $"【{json[i]["Nickname"]}】{json[i]["Message"]}";
                 string imgUrl = (string)json[i]["Headimgurl"];
+
+                //添加记录消息以便随机播放
+                if (recordMsgs.Count < 1000)
+                    recordMsgs.Add(new MessageModel { Avator = imgUrl, Content = text,ObjectType=type,ObjectIndex=index });
+                msgFreeTime = 0;
+                
+
                 ObjectController.Instance.Create(index, type, text, imgUrl);
 
                 Debug.Log($"[{DateTime.Now}]播放#{id}消息");
@@ -197,5 +220,17 @@ public class Net : MonoBehaviour
         StringContent content = new StringContent(json);
         content.Headers.ContentType= new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
         return content;
+    }
+
+    //播放空闲消息
+    void PlayRecordMsg()
+    {
+        if (recordMsgs.Count == 0)
+            return;
+        int index = new System.Random().Next(0, recordMsgs.Count);
+        var record = recordMsgs[index];
+        ObjectController.Instance.Create(record.ObjectIndex, record.ObjectType, record.Content, record.Avator);
+
+        //Debug.Log($"[{DateTime.Now}]播放重复da#{id}消息");
     }
 }

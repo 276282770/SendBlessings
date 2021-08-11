@@ -38,13 +38,18 @@ public class GameController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.F1)){
             SetSettingType(0);
-        } else if (Input.GetKeyDown(KeyCode.F2))
+        } 
+        else if (Input.GetKeyDown(KeyCode.F2))
         {
             SetSettingType(1);
         }
         else if (Input.GetKeyDown(KeyCode.F3))
         {
             SetSettingType(2);
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
         }
     }
     void LoadBg()
@@ -67,7 +72,10 @@ public class GameController : MonoBehaviour
         float cameraWidth = Camera.main.aspect * cameraHeight;
         Size screenSize = new Size(1920, 1080);
         SpriteRenderer bg = scenes[i].GetComponent<SpriteRenderer>();
-        bg.sprite = GetSprite(bgPaths[i], screenSize);
+        Sprite sprite=GetSprite(bgPaths[i], screenSize);
+        if (sprite == null)
+            return;
+        bg.sprite = sprite;
         Vector3 scale = scenes[i].transform.localScale;
         scale.y *= cameraHeight / screenSize.Height*100;
         scale.x *= cameraWidth / screenSize.Width*100;
@@ -153,6 +161,8 @@ public class GameController : MonoBehaviour
     public Sprite GetSprite(string path,Size size)
     {
         FileInfo fi = new FileInfo(path);
+        if (!fi.Exists)
+            return null;
         FileStream fs = fi.OpenRead();
         byte[] buffer = new byte[fs.Length];
         fs.Read(buffer, 0, (int)fs.Length);

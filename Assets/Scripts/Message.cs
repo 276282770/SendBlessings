@@ -9,13 +9,15 @@ public class Message : MonoBehaviour
 {
 
     
-    RectTransform rectTransform;
-    Image image;
+    RectTransform rectTransform; 
     int x = -960;
+
+    public Image image;
+    public Text text;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
-        image = transform.GetChild(0).GetComponent<Image>();
+        //image = transform.GetChild(0).GetComponent<Image>();
     }
     // Start is called before the first frame update
     void Start()
@@ -26,9 +28,10 @@ public class Message : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (transform.position.x>= x)
+        if (rectTransform.position.x >= -rectTransform.rect.width)
         {
             transform.Translate(Vector3.left);
+            //Debug.Log(GetPos());
         }
         else
         {
@@ -40,7 +43,7 @@ public class Message : MonoBehaviour
     public void SetMessage(string msg,string headImgUrl)
     {
         
-       GetComponent<Text>().text = msg;
+       text.text = msg;
        // HttpClient client = new HttpClient();
        //HttpResponseMessage response= client.GetAsync(headImgUrl).Result;
        // byte[] buffer = response.Content.ReadAsByteArrayAsync().Result;
@@ -67,5 +70,13 @@ public class Message : MonoBehaviour
                 image.sprite = Sprite.Create(texture, new Rect(0, 0, texture.width, texture.height), new Vector2(0.5f, 0.5f));
             }
         }
+    }
+    public Vector2 GetSize()
+    {
+        return GetComponent<RectTransform>().rect.size;
+    }
+    public Vector2 GetPos()
+    {
+        return GetComponent<RectTransform>().anchoredPosition;
     }
 }
