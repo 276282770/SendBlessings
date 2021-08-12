@@ -63,6 +63,7 @@
     <Compile Include="Assets\Scripts\ObjectController.cs" />
     <Compile Include="Assets\Scripts\GameController.cs" />
     <Compile Include="Assets\Scripts\MessageController.cs" />
+    <Compile Include="Assets\Scripts\Background.cs" />
     <Compile Include="Assets\Scripts\Firework.cs" />
     <Compile Include="Assets\Scripts\MessageModel.cs" />
     <Compile Include="Assets\Scripts\ObjectType.cs" />

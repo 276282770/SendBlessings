@@ -469,6 +469,7 @@ GameObject:
   m_Component:
   - component: {fileID: 334657038}
   - component: {fileID: 334657039}
+  - component: {fileID: 334657040}
   m_Layer: 0
   m_Name: SCENE_YANHUA
   m_TagString: Untagged
@@ -542,6 +543,18 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &334657040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334657037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aee5f8126324b424bb1d0d178a3db441, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &456111557
 GameObject:
   m_ObjectHideFlags: 0
@@ -699,14 +712,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   preFireworks:
   - {fileID: 1084819780873013944, guid: 72e2a77e099072c4b9ba1bf555fc6f75, type: 3}
-  - {fileID: 1084819780873013944, guid: 75cca4450a5fd6e4884eb552408c7bc0, type: 3}
-  - {fileID: 1084819780873013944, guid: 8b1b7df5fb8f6e54081b0452327956a5, type: 3}
   - {fileID: 1084819780873013944, guid: db7b20139ac5cff41840deda00a7aae8, type: 3}
-  - {fileID: 1084819780873013944, guid: cbde5913277cc814a8666f89c7804ec6, type: 3}
-  - {fileID: 1084819780873013944, guid: bd1ef39ca4322a7439b5d18ce8a4fed8, type: 3}
   - {fileID: 1084819780873013944, guid: 4e425dbbfd1c1e447b054ffb01117946, type: 3}
-  - {fileID: 1084819780873013944, guid: 9f2731c5a9f83de458e02e14750dd4d5, type: 3}
+  - {fileID: 1084819780873013944, guid: 75cca4450a5fd6e4884eb552408c7bc0, type: 3}
+  - {fileID: 1084819780873013944, guid: bd1ef39ca4322a7439b5d18ce8a4fed8, type: 3}
   - {fileID: 1084819780873013944, guid: ec8982c6920e1a24fa74b06e7d129581, type: 3}
+  - {fileID: 1084819780873013944, guid: 8b1b7df5fb8f6e54081b0452327956a5, type: 3}
+  - {fileID: 1084819780873013944, guid: 9f2731c5a9f83de458e02e14750dd4d5, type: 3}
+  - {fileID: 1084819780873013944, guid: cbde5913277cc814a8666f89c7804ec6, type: 3}
   preLights:
   - {fileID: 7897384847092981538, guid: 6131e8a741ca5164da94a4b2425e82ee, type: 3}
   - {fileID: 7897384847092981538, guid: 27f24322f55fbc74c9bc10ff3e1567c6, type: 3}
@@ -736,7 +749,7 @@ MonoBehaviour:
   - {fileID: 6632233951035670803, guid: 35186da1bc088c043b83a01fd407c3b5, type: 3}
   parents:
   - {fileID: 0}
-  - {fileID: 334657038}
+  - {fileID: 0}
   - {fileID: 136313798}
   margin: 100
 --- !u!20 &519420031

@@ -14,6 +14,7 @@ public class Message : MonoBehaviour
 
     public Image image;
     public Text text;
+    public Color[] colors;
     private void Awake()
     {
         rectTransform = GetComponent<RectTransform>();
@@ -44,6 +45,7 @@ public class Message : MonoBehaviour
     {
         
        text.text = msg;
+        text.color = colors[Random.Range(0, colors.Length)];
        // HttpClient client = new HttpClient();
        //HttpResponseMessage response= client.GetAsync(headImgUrl).Result;
        // byte[] buffer = response.Content.ReadAsByteArrayAsync().Result;

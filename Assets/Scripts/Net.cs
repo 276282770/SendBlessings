@@ -12,7 +12,7 @@ using Models;
 public class Net : MonoBehaviour
 {
     public int timeRate = 2;
-    // Start is called before the first frame update
+
     Udp udpClient;
     string ip;
     int point;
@@ -37,6 +37,7 @@ public class Net : MonoBehaviour
         //Debug.Log(ip+" "+point);
         //SendEcho();
         
+        
     }
 
     // Update is called once per frame
@@ -56,7 +57,7 @@ public class Net : MonoBehaviour
         {
             count -= Time.deltaTime;
         }
-        if(msgFreeTime>120)
+        if(msgFreeTime>7)
         {
             PlayRecordMsg();
             msgFreeTime = 0;
@@ -65,6 +66,8 @@ public class Net : MonoBehaviour
         {
             msgFreeTime += Time.deltaTime;
         }
+
+
     }
 
     private void OnDestroy()
@@ -226,6 +229,9 @@ public class Net : MonoBehaviour
     void PlayRecordMsg()
     {
         if (recordMsgs.Count == 0)
+            return;
+        var canvas = GameObject.Find("Canvas").transform;
+        if (canvas.childCount >= 15)
             return;
         int index = new System.Random().Next(0, recordMsgs.Count);
         var record = recordMsgs[index];

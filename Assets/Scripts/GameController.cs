@@ -59,7 +59,7 @@ public class GameController : MonoBehaviour
         
         for (int i=0;i<scenes.Length;i++)
         {
-            LoadBg(i);
+            //LoadBg(i);
             //调整背景大小
             //Vector3 scale=scenes[i]
         }

@@ -26,6 +26,8 @@ public class MessageController : MonoBehaviour
         //maxX = Screen.width+900;
         maxY = 0;
         maxX = Screen.width;
+
+        int lineCount = Screen.height / 80;
     }
     private void Update()
     {
@@ -38,17 +40,11 @@ public class MessageController : MonoBehaviour
         {
             time -= Time.deltaTime;
         }
-        if(Input.GetMouseButtonDown(0))
-        {
-            CreateText("你好，佩奇", "https://img2.baidu.com/it/u=2531709812,3517416922&fm=253&fmt=auto&app=120&f=JPEG?w=280&h=180");
-        }
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            var child = transform.GetChild(0).GetComponent<RectTransform>();
-            //child.position = new Vector3(child.position.x,0);
-            child.anchoredPosition = new Vector3(child.position.x,0);
-            Debug.Log(child.position);
-        }
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    CreateText("你好，佩奇", "https://img2.baidu.com/it/u=2531709812,3517416922&fm=253&fmt=auto&app=120&f=JPEG?w=280&h=180");
+        //}
+
     }
     public void CreateText(string text,string imgUrl)
     {
@@ -84,10 +80,14 @@ public class MessageController : MonoBehaviour
         //lastLine= 0;
         //time = 5;
         var textSize= preText.GetSize();
-        int textHeight = 80;
-        int lineCount = Screen.height / textHeight;
+        int textHeight = 85;
+        int lineCount = (Screen.height) / textHeight;
 
-            int index = Random.Range(0, lineCount);
+        int maxCount =Mathf.Min(lineCount, lineCount / 2 + 2);
+        int minCount = Mathf.Max(0, lineCount / 2 - 3);
+
+            //int index = Random.Range(0, lineCount);
+            int index = Random.Range(minCount, maxCount);
             int y = -index * textHeight;
             int x = maxX;
 
