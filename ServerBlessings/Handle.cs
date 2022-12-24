@@ -10,13 +10,18 @@ using System.Data.SqlClient;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using System.Text;
 using System.IO;
+using System.Net.Http;
+using Newtonsoft.Json.Linq;
+using NLog;
 
 namespace Web
 {
     public class Handle
     {
+
         public static Udp udpClient ;
         public static IPEndPoint iep;
+
         public static void Send(string data)
         {
             if (iep == null)
@@ -121,6 +126,90 @@ WHERE ISSHOWED=0 ";
         public static string GetPath()
         {
             return System.Environment.CurrentDirectory;
+        }
+        /// <summary>
+        /// 获取OPENID
+        /// </summary>
+        /// <param name="code"></param>
+        /// <returns></returns>
+        public static Task<JObject> GetOpenId(string code)
+        {
+            string url = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx34ee0c35e400d9d6&secret=08756fc67900bf6735a62ca410cd9145&code={code}&grant_type=authorization_code";
+            return GetAsync(url);
+        }
+        public static Task<JObject> GetUserInfo(string openId,string access_token)
+        {
+            string url = $"https://api.weixin.qq.com/sns/userinfo?access_token={access_token}&openid={openId}&lang=zh_CN";
+            return GetAsync(url);
+        }
+        static async Task<JObject> GetAsync(string url)
+        {
+            using var client = new HttpClient();
+            var response = await client.GetAsync(url);
+            var retContent = await response.Content.ReadAsStringAsync();
+            JObject jRet = JObject.Parse(retContent);
+            return jRet;
+        }
+        static int AddUser(string openId, string nickname, string province, bool sex, string city, string country, string headimgurl, string privilege, string unionid)
+        {
+            if (unionid == null)
+                unionid = "";
+            int id = -1;
+            string sql = @"INSERT USERS(OPENID,NICKNAME,PROVINCE,SEX,CITY,COUNTRY,HEADIMGURL,PRIVILEGE,UNIONID) 
+                VALUES(@OPENID,@NICKNAME,@PROVINCE,@SEX,@CITY,@COUNTRY,@HEADIMGURL,@PRIVILEGE,@UNIONID)
+                SELECT @@IDENTItY";
+            SqlParameter[] pars = new SqlParameter[] {
+            new SqlParameter("@OPENID",openId),
+            new SqlParameter("@NICKNAME",nickname),
+            new SqlParameter("@PROVINCE",province),
+            new SqlParameter("@SEX",sex),
+            new SqlParameter("@CITY",city),
+            new SqlParameter("@COUNTRY",country),
+            new SqlParameter("@HEADIMGURL",headimgurl),
+            new SqlParameter("@PRIVILEGE",privilege),
+            new SqlParameter("@UNIONID",unionid)
+            };
+            object o = SqlHelper.ExecuteScalar(sql, pars);
+            if (o != null)
+                id = int.Parse(o.ToString());
+            return id;
+        }
+        public async static Task<int> GetUserIDByCode(string code)
+        {
+            var logger=LogManager.GetCurrentClassLogger();
+            logger.Info("获取用户ID方法 GetUserIDByCode");
+            logger.Debug($"?{code}");
+            int id = -1;
+            try
+            {
+                var jOpenId = await GetOpenId(code);
+                var openId = (string)jOpenId["openid"];
+                logger.Debug($"获取OpenId#{openId}");
+                 id = GetUserId(openId);
+                logger.Debug($"获取数据库中用户ID#{id}");
+                if (id > 0)
+                    return id;
+                var accessToken = (string)jOpenId["access_token"];
+
+                var userInfo = await GetUserInfo(openId, accessToken);
+                logger.Debug($"获取用户信息#{userInfo.ToString(Newtonsoft.Json.Formatting.None)}");
+                string nickName = (string)userInfo["nickname"];
+                string province = (string)userInfo["province"];
+                bool sex = (int)userInfo["sex"] == 1 ? true : false;
+                string city = (string)userInfo["city"];
+                string country = (string)userInfo["country"];
+                string headimgurl = (string)userInfo["headimgurl"];
+                string privilege = userInfo["privilege"].ToString();
+                string unionid = (string)userInfo["unionid"];
+                id = AddUser(openId, nickName, province, sex, city, country, headimgurl, privilege, unionid);
+                logger.Debug($"添加数据库用户#{id}");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
+            return id;
+
         }
     }
 }

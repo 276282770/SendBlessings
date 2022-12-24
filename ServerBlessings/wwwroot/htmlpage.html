@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script>
+        let domain = "http://www.hnyouyang.com"
+        let url = domain + "/api/GetUserIdByCode";
+
+        function getUrlParas() {
+            let url = window.location.href;
+            let urlSplit = url.split('?');
+            if (urlSplit.length != 2)
+                return null;
+            let paramStr = urlSplit[1];
+            let paramsSplit = paramStr.split('&')
+            let params = {};
+            for (var i = 0; i < paramsSplit.length; i++) {
+                let keyValue = paramsSplit[i].split('=');
+                let key = keyValue[0];
+                let value = keyValue[1];
+                params[key] = value;
+            }
+            return params;
+        }
+
+        var pars = getUrlParas();
+        console.log(pars.code);
+
+        let data = { code:pars.code };
+        axios.post(url, data).then(
+            function (ret) {
+                console.log(ret.data);
+                let id = ret.data.id;
+                location.href = domain +'/default.html?userid='+id
+            }
+        ).catch(function (err) {
+            console.error(err);
+        });
+
+       
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -19,8 +19,8 @@ namespace WebApplication1
     {
         NameValueCollection paras;
         //string url_home = "http://zf.cracre.vip:81/default.html";
-        string url_home = "http://zf.cyhdzy.com:81/default.html";
-        public  void ProcessRequest(HttpContext context)
+        string url_home = "http://www.hnyouyang.com:81/default.html";
+        public async void ProcessRequest(HttpContext context)
         {
             context.Response.ContentType = "text/plain";
             paras = context.Request.QueryString;
@@ -46,9 +46,9 @@ namespace WebApplication1
             {
                 if (!string.IsNullOrEmpty(code))
                 {
-                    //string url_getOpenId = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx34ee0c35e400d9d6&secret=a8771dcd6a044ef1b9402e1f570c29a1&code={code}&grant_type=authorization_code";
-                    string url_getOpenId = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc151bbaf83fd2f29&secret=a34afb6d56209769b004d28e230f7df6&code={code}&grant_type=authorization_code";
-                    JObject ret = Get(url_getOpenId);
+                    string url_getOpenId = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx34ee0c35e400d9d6&secret=08756fc67900bf6735a62ca410cd9145&code={code}&grant_type=authorization_code";
+                    //string url_getOpenId = $"https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxc151bbaf83fd2f29&secret=a34afb6d56209769b004d28e230f7df6&code={code}&grant_type=authorization_code";
+                    JObject ret =await GetAsync(url_getOpenId);
                     string openId = (string)ret["openid"];
                     string access_token = (string)ret["access_token"];
                     int id = 0;
@@ -66,7 +66,7 @@ namespace WebApplication1
                     else
                     {
                         string url_getUserInfo = $"https://api.weixin.qq.com/sns/userinfo?access_token={access_token}&openid={openId}&lang=zh_CN";
-                        JObject retUserInfo = Get(url_getUserInfo);
+                        JObject retUserInfo =await GetAsync(url_getUserInfo);
                         if (retUserInfo != null)
                         {
                             id = AddUser((string)retUserInfo["openid"], (string)retUserInfo["nickname"], (string)retUserInfo["province"], (int)retUserInfo["sex"] == 1 ? true : false, (string)retUserInfo["city"],
@@ -78,7 +78,7 @@ namespace WebApplication1
             }
             catch(Exception e)
             {
-                WriteFile(e.Message);
+                WriteFile($"[{DateTime.Now.ToLongTimeString()}] {e.Message}");
             }
 
 
@@ -136,7 +136,8 @@ namespace WebApplication1
         {
             JObject jRet;
             HttpClient client = new HttpClient();
-            HttpResponseMessage response= client.GetAsync( url).Result;
+            //HttpResponseMessage response= client.GetAsync( url).Result;
+            HttpResponseMessage response =await client.GetAsync(url);
             try
             {
                 string ret =await response.Content.ReadAsStringAsync();

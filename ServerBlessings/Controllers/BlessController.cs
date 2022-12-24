@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using System.Data;
+using Microsoft.Extensions.Logging;
 
 namespace Web.Controller
 {
@@ -14,6 +15,7 @@ namespace Web.Controller
     [Route("API")]
     public class BlessController:ControllerBase
     {
+ 
         [HttpPost()]
         public string Post(JObject value)
         {
@@ -116,6 +118,26 @@ namespace Web.Controller
             jRet["Result"] = Handle.SetType((int)jDataIn["index"]);
             return jRet;
         }
-        
+        [HttpPost("GetUserIdByCode")]
+        public async Task<JObject> GetUserIdByCode(JObject jCode)
+        {
+                JObject jRet = new JObject();
+            try
+            {
+                jRet["id"] = await Handle.GetUserIDByCode(jCode["code"].ToString());
+            }
+            catch(Exception ex)
+            {
+                jRet["error"] = ex.Message;
+            }
+            return jRet;
+        }
+        [HttpPost("aaa")]
+        public JObject aaa(JObject jCode)
+        {
+            JObject jRet = new JObject();
+            jRet["id"] = 1;
+            return jRet;
+        }
     }
 }
